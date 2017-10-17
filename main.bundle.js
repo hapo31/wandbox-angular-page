@@ -188,7 +188,8 @@ var AppModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostCompileService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_PostEventSource__ = __webpack_require__("../../../../../src/app/utils/PostEventSource.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -201,6 +202,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var PostCompileService = /** @class */ (function () {
     function PostCompileService(http) {
         this.http = http;
@@ -209,9 +211,14 @@ var PostCompileService = /** @class */ (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpHeaders */]();
         headers.set('Content-Type', 'application/json');
         headers.set('Cache-Control', 'no-cache');
-        return this.http.post(__WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].baseUrl + 'compile.json', param, {
+        return this.http.post(__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseApiUrl + 'compile.json', param, {
             headers: headers
         });
+    };
+    PostCompileService.prototype.postCompileEventStream = function (param) {
+        var pes = new __WEBPACK_IMPORTED_MODULE_2__utils_PostEventSource__["a" /* PostEventSource */](__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseUrl + 'compile');
+        pes.post(param);
+        return pes.eventSource;
     };
     PostCompileService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
@@ -253,7 +260,7 @@ var CompilerListAPIService = /** @class */ (function () {
         this.http = http;
     }
     CompilerListAPIService.prototype.fetch = function () {
-        return this.http.get(__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseUrl + 'list.json');
+        return this.http.get(__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseApiUrl + 'list.json');
     };
     CompilerListAPIService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
@@ -292,7 +299,7 @@ var TemplateAPIService = /** @class */ (function () {
         this.http = http;
     }
     TemplateAPIService.prototype.fetch = function (templateName) {
-        return this.http.get(__WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].baseUrl + 'template/' + templateName);
+        return this.http.get(__WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].baseApiUrl + 'template/' + templateName);
     };
     TemplateAPIService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
@@ -565,7 +572,7 @@ var RunCompileService = /** @class */ (function () {
         this.runCompileSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["Subject"]();
     }
     /**
-     * Create compile request params
+     * Post compile request.
      *
      * @param {string} stdin
      * @param {Array<TabModel>} tabs
@@ -574,6 +581,30 @@ var RunCompileService = /** @class */ (function () {
      * @memberof RunCompileService
      */
     RunCompileService.prototype.run = function (stdin, tabs, language) {
+        return this.compileApi.postCompile(this.createRequestParams(stdin, tabs, language));
+    };
+    /**
+     * Post compile request event stream enable.
+     * NOTE: this method created observables must be unsubscribe when all process done.
+     *
+     * @param {string} stdin
+     * @param {Array<TabModel>} tabs
+     * @param {LanguageModel} language
+     * @memberof RunCompileService
+     */
+    RunCompileService.prototype.runOnEventSource = function (stdin, tabs, language) {
+        return this.compileApi.postCompileEventStream(this.createRequestParams(stdin, tabs, language));
+    };
+    /**
+     * Create compile request params
+     *
+     * @param {string} stdin
+     * @param {Array<TabModel>} tabs
+     * @param {LanguageModel} language
+     * @returns
+     * @memberof RunCompileService
+     */
+    RunCompileService.prototype.createRequestParams = function (stdin, tabs, language) {
         var code = tabs[0].editorContent;
         var codes = tabs.length > 1 ? tabs.map(function (v) { return ({
             code: v.editorContent,
@@ -594,7 +625,7 @@ var RunCompileService = /** @class */ (function () {
             compileOptionRawIndex !== -1 ? selectCompiler.options[compileOptionRawIndex].item.value : undefined,
             runtimeOptionRawIndex !== -1 ? selectCompiler.options[runtimeOptionRawIndex].item.value : undefined,
         ], compilerOptionRaw = _a[0], runtimeOptionRaw = _a[1];
-        var request = {
+        return {
             code: code,
             compiler: compiler,
             options: options,
@@ -604,7 +635,6 @@ var RunCompileService = /** @class */ (function () {
             'compiler-option-raw': compilerOptionRaw,
             'runtime-option-raw': runtimeOptionRaw
         };
-        return this.compileApi.postCompile(request);
     };
     RunCompileService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
@@ -639,7 +669,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/compile-result-tab/compile-result-tab.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"result-container\" *ngIf=\"results.length > 0\">\n    <div class=\"tabbable tabs-left\">\n        <ul class=\"nav nav-tabs\">\n            <li *ngFor=\"let result of results; let i=index;\" [class.active]=\"i === activeIndex\" (click)=\"activationResultTab(i)\">\n                <button type=\"button\" class=\"close\" (click)=\"clickRemoveTab(i)\">×</button>\n                <a data-toggle=\"tab\">#{{result.tabName}}</a>\n            </li>\n        </ul>\n    </div>\n    <div class=\"tab-content\">\n        <div class=\"tab-pane result-window active\">\n            <div class=\"permlink\">\n                <a href=\"#\" class=\"btn btn-default\">\n                    <span class=\"glyphicon glyphicon-share\"></span> Share</a>\n            </div>\n            <div class=\"wandbox-code-window\">\n                <div class=\"wandbox-code-window-code panel panel-default\">\n                    <a id=\"wandbox-resultwindow-code-header-1\" data-toggle=\"collapse\" href=\"#wandbox-resultwindow-code-body\" aria-expanded=\"true\"\n                        class=\"\"> Code </a>\n                    <div id=\"wandbox-resultwindow-code-body\" class=\"panel-collapse collapse\">\n                        <div class=\"panel-body\">\n                            <div class=\"wandbox-resultwindow-compiler\">\n                                <div>\n                                    <p>[{{selectedResult.languageName}}] {{selectedResult.compilerName}}</p>\n                                </div>\n                            </div>\n                            <div class=\"wandbox-resultwindow-code\" *ngIf=\"selectedResult.resultFetched\">\n                                <ul class=\"nav nav-tabs\" role=\"tablist\">\n                                    <li *ngFor=\"let tab of selectedResult.tabs; let i=index;\" [class.active]=\"selectedResult.activeSourceTabIndex === i\" (click)=\"activationSourceTab(i)\">\n                                        <a class=\"\" href=\"#wandbox-resultwindow-code-body-1-0\" role=\"tab\" data-toggle=\"tab\">\n                                            <i class=\"glyphicon glyphicon-file\"></i>\n                                            <span *ngIf=\"i !== 0\">{{tab.fileName}}</span>\n                                        </a>\n                                    </li>\n                                </ul>\n                                <div class=\"tab-content\">\n                                    <div id=\"wandbox-resultwindow-code-body\" role=\"tabpanel\" class=\"tab-pane active\">\n                                        <pre>{{selectedResult.activeTab.editorContent}}</pre>\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"wandbox-resultwindow-stdin\">\n                                <pre>{{selectedResult.stdin}}</pre>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"output-window\" *ngIf=\"selectedResult != null\">\n                <!-- <pre class=\"Control\">Start</pre> -->\n                <pre class=\"CompilerMessageE\">{{selectedResult.compilerErrorMessage}}</pre>\n                <pre class=\"StdOut\">{{selectedResult.programOutout}}</pre>\n                <pre class=\"Signal\">{{selectedResult.signalMessage}}</pre>\n                <pre class=\"ExitCode\" *ngIf=\"selectedResult.status !== -1\">{{selectedResult.status}}</pre>\n                <!-- <pre class=\"Control\">Finish</pre> -->\n            </div>\n        </div>\n    </div>\n</div>\n"
+module.exports = "<div id=\"result-container\" *ngIf=\"results.length > 0\">\n    <div class=\"tabbable tabs-left\">\n        <ul class=\"nav nav-tabs\">\n            <li *ngFor=\"let result of results; let i=index;\" [class.active]=\"i === activeIndex\" (click)=\"activationResultTab(i)\">\n                <button type=\"button\" class=\"close\" (click)=\"clickRemoveTab(i)\">×</button>\n                <a data-toggle=\"tab\">#{{result.tabName}}</a>\n            </li>\n        </ul>\n    </div>\n    <div class=\"tab-content\">\n        <div class=\"tab-pane result-window active\">\n            <div class=\"permlink\">\n                <a href=\"#\" class=\"btn btn-default\">\n                    <span class=\"glyphicon glyphicon-share\"></span> Share</a>\n            </div>\n            <div class=\"wandbox-code-window\">\n                <div class=\"wandbox-code-window-code panel panel-default\">\n                    <a id=\"wandbox-resultwindow-code-header-1\" data-toggle=\"collapse\" href=\"#wandbox-resultwindow-code-body\" aria-expanded=\"true\"\n                        class=\"\"> Code </a>\n                    <div id=\"wandbox-resultwindow-code-body\" class=\"panel-collapse collapse\">\n                        <div class=\"panel-body\">\n                            <div class=\"wandbox-resultwindow-compiler\">\n                                <div>\n                                    <p>[{{selectedResult.languageName}}] {{selectedResult.compilerName}}</p>\n                                </div>\n                            </div>\n                            <div class=\"wandbox-resultwindow-code\" *ngIf=\"selectedResult.resultFetched\">\n                                <ul class=\"nav nav-tabs\" role=\"tablist\">\n                                    <li *ngFor=\"let tab of selectedResult.tabs; let i=index;\" [class.active]=\"selectedResult.activeSourceTabIndex === i\" (click)=\"activationSourceTab(i)\">\n                                        <a class=\"\" href=\"#wandbox-resultwindow-code-body-1-0\" role=\"tab\" data-toggle=\"tab\">\n                                            <i class=\"glyphicon glyphicon-file\"></i>\n                                            <span *ngIf=\"i !== 0\">{{tab.fileName}}</span>\n                                        </a>\n                                    </li>\n                                </ul>\n                                <div class=\"tab-content\">\n                                    <div id=\"wandbox-resultwindow-code-body\" role=\"tabpanel\" class=\"tab-pane active\">\n                                        <pre>{{selectedResult.activeTab.editorContent}}</pre>\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"wandbox-resultwindow-stdin\">\n                                <pre>{{selectedResult.stdin}}</pre>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"output-window\" *ngIf=\"selectedResult != null\">\n\n                <ng-container *ngIf=\"selectedResult.eventSource\">\n                    <pre *ngFor=\"let line of selectedResult.outputLines\" class=\"{{line.type}}\">{{line.message}}</pre>\n                </ng-container>\n                <ng-container *ngIf=\"!selectedResult.eventSource\">\n                    <!-- <pre class=\"Control\">Start</pre> -->\n                    <pre class=\"CompilerMessageE\">{{selectedResult.compilerErrorMessage}}</pre>\n                    <pre class=\"StdOut\">{{selectedResult.programOutout}}</pre>\n                    <pre class=\"Signal\">{{selectedResult.signalMessage}}</pre>\n                    <pre class=\"ExitCode\" *ngIf=\"selectedResult.status !== -1\">{{selectedResult.status}}</pre>\n                    <!-- <pre class=\"Control\">Finish</pre> -->\n                </ng-container>\n            </div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -749,7 +779,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/compile/compile.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n    <div class=\"col-md-12\">\n        <a (click)=\"!model.compiling && postCompile()\" class=\"btn btn-default\" id=\"wandbox-compile\">\n            <ng-container *ngIf=\"model.compiling\">\n                <img src=\"./assets/image/compiling.gif\" alt=\"Compiling\" class=\"btn btn-default\" id=\"wandbox-compiling\">\n            </ng-container>\n            <ng-container *ngIf=\"!model.compiling\">\n                Run (or Ctrl+Enter)\n            </ng-container>\n        </a>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-10\">\n        <compile-result-tab [activeIndex]=\"model.activeResultIndex\" [results]=\"model.compileResults\" (changeTab)=\"changeTab($event)\"\n            (removeTab)=\"removeTab($event)\"></compile-result-tab>\n    </div>\n    <div class=\"col-md-2\">\n        <div id=\"result-container-settings\">\n            <div class=\"checkbox\">\n                <label>\n                    <input class=\"nowrap-output-window\" type=\"checkbox\" value=\"nowrap-output-window\">No Wrap\n                </label>\n            </div>\n            <div class=\"checkbox\">\n                <label>\n                    <input class=\"expand-output-window\" type=\"checkbox\" value=\"expand-output-window\">Expand\n                </label>\n            </div>\n        </div>\n    </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n    <div class=\"col-md-2\">\n        <a (click)=\"!model.compiling && postCompile()\" class=\"btn btn-default\" id=\"wandbox-compile\">\n            <ng-container *ngIf=\"model.compiling\">\n                <img src=\"./assets/image/compiling.gif\" alt=\"Compiling\" class=\"btn btn-default\" id=\"wandbox-compiling\">\n            </ng-container>\n            <ng-container *ngIf=\"!model.compiling\">\n                Run (or Ctrl+Enter)\n            </ng-container>\n        </a>\n    </div>\n    <div class=\"col-md-4\">\n        <label>\n            <input type=\"checkbox\" [(ngModel)]=\"model.enableEventSource\"> Enable Realtime Outout(Experimental)\n        </label>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-10\">\n        <compile-result-tab [activeIndex]=\"model.activeResultIndex\" [results]=\"model.compileResults\" (changeTab)=\"changeTab($event)\"\n            (removeTab)=\"removeTab($event)\"></compile-result-tab>\n    </div>\n    <div class=\"col-md-2\">\n        <div id=\"result-container-settings\">\n            <div class=\"checkbox\">\n                <label>\n                    <input class=\"nowrap-output-window\" type=\"checkbox\" value=\"nowrap-output-window\">No Wrap\n                </label>\n            </div>\n            <div class=\"checkbox\">\n                <label>\n                    <input class=\"expand-output-window\" type=\"checkbox\" value=\"expand-output-window\">Expand\n                </label>\n            </div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -797,21 +827,58 @@ var CompileComponent = /** @class */ (function () {
         // push to head
         this.model.compileResults.splice(0, 0, result);
         this.model.activeResultIndex = 0;
-        this.runCompile.run(this.stdin, this.tabs, this.selectedLanguage).subscribe(function (res) {
-            var compiler = _this.selectedLanguage.selectedCompiler;
-            result.compilerName = compiler.displayName + ' ' + compiler.version;
-            result.languageName = _this.selectedLanguage.languageName;
-            result.programMessage = res.program_message;
-            result.programOutout = res.program_output;
-            result.compilerErrorMessage = res.compiler_error;
-            result.programErrorMessage = res.program_error;
-            result.signalMessage = res.signal;
-            result.status = +(res.status !== undefined ? res.status : -1);
-            // TODO: ディープコピーが適当すぎる
-            result.tabs = JSON.parse(JSON.stringify(_this.tabs));
-            result.resultFetched = true;
-            _this.model.compiling = false;
-        });
+        var evEnable = true;
+        var compiler = this.selectedLanguage.selectedCompiler;
+        result.compilerName = compiler.displayName + ' ' + compiler.version;
+        result.languageName = this.selectedLanguage.languageName;
+        // TODO: ディープコピーが適当すぎる
+        result.tabs = JSON.parse(JSON.stringify(this.tabs));
+        if (this.model.enableEventSource) {
+            result.eventSource = true;
+            var subscription_1 = this.runCompile.runOnEventSource(this.stdin, this.tabs, this.selectedLanguage)
+                .subscribe(function (event) {
+                console.log('compile', event);
+                switch (event.type) {
+                    case 'open':
+                        break;
+                    case 'timeout':
+                    case 'error':
+                    case 'exception':
+                        result.outputLines.push({
+                            type: 'Control',
+                            message: 'Finish'
+                        });
+                        result.resultFetched = true;
+                        _this.model.compiling = false;
+                        subscription_1.unsubscribe();
+                        break;
+                    case 'message':
+                        result.outputLines.push({ type: event.messageType, message: event.payload });
+                        break;
+                }
+            }, function () {
+                subscription_1.unsubscribe();
+                result.resultFetched = true;
+                _this.model.compiling = false;
+            }, function () {
+                subscription_1.unsubscribe();
+                result.resultFetched = true;
+                _this.model.compiling = false;
+            });
+        }
+        else {
+            result.eventSource = false;
+            this.runCompile.run(this.stdin, this.tabs, this.selectedLanguage).subscribe(function (res) {
+                result.programMessage = res.program_message;
+                result.programOutout = res.program_output;
+                result.compilerErrorMessage = res.compiler_error;
+                result.programErrorMessage = res.program_error;
+                result.signalMessage = res.signal;
+                result.status = +(res.status !== undefined ? res.status : -1);
+                result.resultFetched = true;
+                _this.model.compiling = false;
+            });
+        }
     };
     CompileComponent.prototype.removeTab = function (index) {
         this.model.compileResults.splice(index, 1);
@@ -857,9 +924,11 @@ var CompileComponent = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CompileResultModel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CompileComponentModel; });
+/* unused harmony export EventOutput */
 var CompileResultModel = /** @class */ (function () {
     function CompileResultModel() {
         this.activeSourceTabIndex = 0;
+        this.outputLines = [];
         this.resultFetched = false;
     }
     Object.defineProperty(CompileResultModel.prototype, "activeTab", {
@@ -877,9 +946,16 @@ var CompileComponentModel = /** @class */ (function () {
         this.compileResults = new Array();
         this.activeResultIndex = -1;
         this.compiling = false;
+        this.enableEventSource = false;
         this.compileCount = 0;
     }
     return CompileComponentModel;
+}());
+
+var EventOutput = /** @class */ (function () {
+    function EventOutput() {
+    }
+    return EventOutput;
 }());
 
 //# sourceMappingURL=compile.model.js.map
@@ -1958,6 +2034,159 @@ var SponsorsComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/utils/PostEventSource.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostEventSource; });
+/* unused harmony export EventType */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__ = __webpack_require__("../../../../rxjs/Subject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__);
+
+var PostEventSource = /** @class */ (function () {
+    function PostEventSource(targetUrl, timeout) {
+        if (timeout === void 0) { timeout = 50000; }
+        this.targetUrl = targetUrl;
+        this.timeout = timeout;
+        this.subject = new __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__["Subject"]();
+        this.data = [];
+        this.chache = '';
+        this.lastEventId = null;
+        this.readyState = EV_READY_STATE.CONNECTING;
+    }
+    Object.defineProperty(PostEventSource.prototype, "eventSource", {
+        get: function () {
+            return this.subject.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    PostEventSource.prototype.post = function (request) {
+        var _this = this;
+        try {
+            this.chache = '';
+            var xhr_1 = new XMLHttpRequest();
+            xhr_1.open('POST', this.targetUrl, true);
+            xhr_1.setRequestHeader('Content-Type', 'application/json');
+            xhr_1.setRequestHeader('Accept', 'text/event-stream');
+            xhr_1.setRequestHeader('Cache-Control', 'no-cache');
+            xhr_1.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            if (this.lastEventId != null) {
+                xhr_1.setRequestHeader('Last-Event-ID', this.lastEventId);
+            }
+            xhr_1.timeout = this.timeout;
+            xhr_1.onreadystatechange = function () {
+                if (xhr_1.readyState === READY_STATE.LOADING || (xhr_1.readyState === READY_STATE.DONE && xhr_1.status === 200)) {
+                    // on SUCCESS
+                    if (_this.readyState === EV_READY_STATE.CONNECTING) {
+                        _this.readyState = EV_READY_STATE.OPEN;
+                        _this.subject.next({ type: 'open' });
+                    }
+                    var responseSrc = xhr_1.responseText;
+                    var payloadIndex = responseSrc.lastIndexOf('\n');
+                    var responseText = responseSrc.substr(0, payloadIndex);
+                    var parts = responseText.substr(_this.chache.length).split('\n');
+                    var eventType = 'message';
+                    _this.chache = responseText;
+                    console.log('event src', parts);
+                    for (var _i = 0, parts_1 = parts; _i < parts_1.length; _i++) {
+                        var line = parts_1[_i];
+                        if (line.indexOf('event') === 0) {
+                            eventType = line.replace(/event:? ?/, '');
+                        }
+                        else if (line.indexOf('retry') === 0) {
+                            var retry = parseInt(line.replace(/retry:? ?/, ''), 10);
+                            // if (!isNaN(retry)) { interval = retry; }
+                        }
+                        else if (line.indexOf('data') === 0) {
+                            // push payload.
+                            _this.data.push(line.replace(/data:? ?/, ''));
+                        }
+                        else if (line.indexOf('id:') === 0) {
+                            _this.lastEventId = line.replace(/id:? ?/, '');
+                        }
+                        else if (line.indexOf('id') === 0) {
+                            _this.lastEventId = null;
+                        }
+                        else if (line.length === 0) {
+                            if (_this.data.length > 0) {
+                                console.log(_this.data);
+                                var messagePart = _this.data.join('\n').split(':');
+                                var type = messagePart.splice(0, 1)[0];
+                                var message = messagePart.join();
+                                _this.subject.next({
+                                    type: 'message',
+                                    messageType: type,
+                                    lastEventId: _this.lastEventId,
+                                    payload: message
+                                });
+                                _this.data = [];
+                                eventType = 'message';
+                                if (type === 'Control' && message === 'Finish') {
+                                    _this.subject.complete();
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (_this.readyState === EV_READY_STATE.OPEN && xhr_1.status === 400) {
+                    _this.close();
+                }
+                else if (_this.readyState !== EV_READY_STATE.CLOSED) {
+                    // on Error
+                    if (xhr_1.readyState === READY_STATE.DONE) {
+                        _this.readyState = EV_READY_STATE.ERROR;
+                        _this.subject.next({ type: 'error' });
+                    }
+                }
+            };
+            xhr_1.send(JSON.stringify(request));
+            setTimeout(function () {
+                if (xhr_1.readyState === READY_STATE.HEADERS_RECEIVED) {
+                    xhr_1.abort();
+                    _this.subject.next({ type: 'timeout' });
+                }
+            }, this.timeout);
+            this.xhr = xhr_1;
+        }
+        catch (e) {
+            this.subject.next({ type: 'exception', error: e });
+        }
+        return;
+    };
+    PostEventSource.prototype.close = function () {
+        this.readyState = EV_READY_STATE.CLOSED;
+        this.subject.complete();
+        this.xhr.abort();
+    };
+    return PostEventSource;
+}());
+
+var READY_STATE;
+(function (READY_STATE) {
+    READY_STATE[READY_STATE["UNSENT"] = 0] = "UNSENT";
+    READY_STATE[READY_STATE["OPENED"] = 1] = "OPENED";
+    READY_STATE[READY_STATE["HEADERS_RECEIVED"] = 2] = "HEADERS_RECEIVED";
+    READY_STATE[READY_STATE["LOADING"] = 3] = "LOADING";
+    READY_STATE[READY_STATE["DONE"] = 4] = "DONE";
+})(READY_STATE || (READY_STATE = {}));
+var EV_READY_STATE;
+(function (EV_READY_STATE) {
+    EV_READY_STATE[EV_READY_STATE["CONNECTING"] = 0] = "CONNECTING";
+    EV_READY_STATE[EV_READY_STATE["OPEN"] = 1] = "OPEN";
+    EV_READY_STATE[EV_READY_STATE["CLOSED"] = 2] = "CLOSED";
+    EV_READY_STATE[EV_READY_STATE["ERROR"] = 3] = "ERROR";
+})(EV_READY_STATE || (EV_READY_STATE = {}));
+var EventType;
+(function (EventType) {
+    EventType[EventType["OPEN"] = 0] = "OPEN";
+    EventType[EventType["MESSAGE"] = 1] = "MESSAGE";
+    EventType[EventType["ERROR"] = 2] = "ERROR";
+})(EventType || (EventType = {}));
+//# sourceMappingURL=PostEventSource.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/environments/environment.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1968,7 +2197,8 @@ var SponsorsComponent = /** @class */ (function () {
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 var environment = {
-    baseUrl: 'https://wandbox.org/api/',
+    baseApiUrl: 'https://wandbox.org/api/',
+    baseUrl: 'https://wandbox.org/',
     production: false,
     DEFAULT_COMPILER: 'gcc-head'
 };
