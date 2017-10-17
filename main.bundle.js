@@ -907,7 +907,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/compiler/compiler.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" *ngIf=\"model.fetched\">\n    <div class=\"col-md-12\" *ngIf=\"selectedLanguage != null\">\n        <p class=\"wandbox-current-compiler-language label label-success\">{{selectedLanguage.languageName}}</p>\n        <div class=\"dropdown wandbox-compiler\">\n            <button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdown-language\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                <span class=\"wandbox-current-compiler-text\">{{selectedLanguage.selectedCompiler.displayName}} {{selectedLanguage.selectedCompiler.version}}</span>\n                <span class=\"wandbox-current-compiler-caret caret\"></span>\n            </button>\n            <div class=\"dropdown-menu wandbox-dropdown-area\" role=\"menu\" aria-labelledby=\"dropdown-language\">\n                <div class=\"wandbox-dropdown-version\"></div>\n                <div class=\"wandbox-dropdown-detail-area\">\n                    <div class=\"tab-content\">\n                        <div class=\"tab-pane-\">\n                            <legend>{{selectedLanguage.languageName}}</legend>\n                            <ul>\n                                <li *ngFor=\"let compiler of selectedLanguage.compilers;let i=index;\">\n                                    <a class=\"wandbox-dropdown-listitem\" [class.selected]=\"selectedLanguage.selectedCompilerIndex === i\" (click)=\"clickCompiler(i)\">\n                                        {{compiler.displayName}} {{compiler.version}}\n                                    </a>\n                                </li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"wandbox-dropdown-lang-area\">\n                    <legend>Languages</legend>\n                    <ul>\n                        <li *ngFor=\"let language of model.languages; let i=index;\">\n                            <a class=\"wandbox-dropdown-language-item\" [class.selected]=\"model.selectedLangIndex === i\" (click)=\"clickLanguage(i, $event)\">{{language.languageName}}</a>\n                            <span class=\"wandbox-badge\">{{language.compilers.length}}</span>\n                        </li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<div *ngIf=\"model.fetched\" class=\"row\">\n    <div class=\"col-md-12\">\n        <div class=\"tab-content\">\n            <div class=\"tab-pane-\">\n                <p class=\"wandbox-insert-template\">\n                    <a (click)=\"clickLoadTemplate(selectedLanguage.selectedCompiler.template)\">Load template</a>\n                </p>\n                <div class=\"option-raw runtime-option-raw\">\n                    <div class=\"form-group\" *ngFor=\"let option of selectedLanguage.selectedCompiler.options; let i=index;\">\n                        <ng-container *ngIf=\"option.type === 'checkbox'\">\n                            <label (change)=\"changeOption(i, option)\">\n                                <input type=\"checkbox\" [(ngModel)]=\"option.item.checked\" [attr.checked]=\"option.item.checked || null\" /> {{option.item.name}}\n                            </label>\n                        </ng-container>\n                        <ng-container *ngIf=\"option.type === 'select'\">\n                            <select class=\"col-md-12 wandbox-select-flags form-control\" [(ngModel)]=\"option.item.value\" (change)=\"changeOption(i, option)\">\n                                <option *ngFor=\"let name of option.item.names; let i=index;\" value=\"{{option.item.values[i]}}\">{{name}}</option>\n                            </select>\n                        </ng-container>\n                        <ng-container *ngIf=\"option.type === 'runtime' || option.type === 'compile'\">\n                            <p class=\"raw-flags\">{{option.item.name}}:</p>\n                            <textarea class=\"form-control\" (keyup)=\"changeOption(i, option)\" [(ngModel)]=\"option.item.value\" rows=\"{{option.item.value.split('\\n').length + 1}}\"></textarea>\n                        </ng-container>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<div *ngIf=\"!model.fetched\" class=\"row\">\n    <div class=\"col-md-12\">\n        <ng-container *ngIf=\"model.errorMessage.length === 0\">\n            <!-- TODO: なんかアイコン入れる -->\n            <button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdown-language\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                <span class=\"wandbox-current-compiler-text\">Loading...</span>\n                <span class=\"wandbox-current-compiler-caret caret\"></span>\n            </button>\n        </ng-container>\n        <ng-container *ngIf=\"model.errorMessage.length !== 0\">\n            <span class=\"wandbox-current-compiler-text\">\n                <span class=\"alert alert-danger\">{{model.errorMessage}}</span>\n            </span>\n        </ng-container>\n    </div>\n</div>\n"
+module.exports = "<div class=\"row\" *ngIf=\"model.fetched\">\n    <div class=\"col-md-12\" *ngIf=\"selectedLanguage != null\">\n        <p class=\"wandbox-current-compiler-language label label-success\">{{selectedLanguage.languageName}}</p>\n        <div class=\"dropdown wandbox-compiler\">\n            <button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdown-language\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                <span class=\"wandbox-current-compiler-text\">{{selectedLanguage.selectedCompiler.displayName}} {{selectedLanguage.selectedCompiler.version}}</span>\n                <span class=\"wandbox-current-compiler-caret caret\"></span>\n            </button>\n            <div class=\"dropdown-menu wandbox-dropdown-area\" role=\"menu\" aria-labelledby=\"dropdown-language\">\n                <div class=\"wandbox-dropdown-version\"></div>\n                <div class=\"wandbox-dropdown-detail-area\">\n                    <div class=\"tab-content\">\n                        <div class=\"tab-pane-\">\n                            <legend>{{selectedLanguage.languageName}}</legend>\n                            <ul>\n                                <li *ngFor=\"let compiler of selectedLanguage.compilers;let i=index;\">\n                                    <a class=\"wandbox-dropdown-listitem\" [class.selected]=\"selectedLanguage.selectedCompilerIndex === i\" (click)=\"selectCompiler(i)\">\n                                        {{compiler.displayName}} {{compiler.version}}\n                                    </a>\n                                </li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"wandbox-dropdown-lang-area\">\n                    <legend>Languages</legend>\n                    <ul>\n                        <li *ngFor=\"let language of model.languages; let i=index;\">\n                            <a class=\"wandbox-dropdown-language-item\" [class.selected]=\"model.selectedLangIndex === i\" (click)=\"selectLanguage(i, null, $event)\">{{language.languageName}}</a>\n                            <span class=\"wandbox-badge\">{{language.compilers.length}}</span>\n                        </li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<div *ngIf=\"model.fetched\" class=\"row\">\n    <div class=\"col-md-12\">\n        <div class=\"tab-content\">\n            <div class=\"tab-pane-\">\n                <p class=\"wandbox-insert-template\">\n                    <a (click)=\"clickLoadTemplate(selectedLanguage.selectedCompiler.template)\">Load template</a>\n                </p>\n                <div class=\"option-raw runtime-option-raw\">\n                    <div class=\"form-group\" *ngFor=\"let option of selectedLanguage.selectedCompiler.options; let i=index;\">\n                        <ng-container *ngIf=\"option.type === 'checkbox'\">\n                            <label (change)=\"changeOption(i, option)\">\n                                <input type=\"checkbox\" [(ngModel)]=\"option.item.checked\" [attr.checked]=\"option.item.checked || null\" /> {{option.item.name}}\n                            </label>\n                        </ng-container>\n                        <ng-container *ngIf=\"option.type === 'select'\">\n                            <select class=\"col-md-12 wandbox-select-flags form-control\" [(ngModel)]=\"option.item.value\" (change)=\"changeOption(i, option)\">\n                                <option *ngFor=\"let name of option.item.names; let i=index;\" value=\"{{option.item.values[i]}}\">{{name}}</option>\n                            </select>\n                        </ng-container>\n                        <ng-container *ngIf=\"option.type === 'runtime' || option.type === 'compile'\">\n                            <p class=\"raw-flags\">{{option.item.name}}:</p>\n                            <textarea class=\"form-control\" (keyup)=\"changeOption(i, option)\" [(ngModel)]=\"option.item.value\" rows=\"{{option.item.value.split('\\n').length + 1}}\"></textarea>\n                        </ng-container>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<div *ngIf=\"!model.fetched\" class=\"row\">\n    <div class=\"col-md-12\">\n        <ng-container *ngIf=\"model.errorMessage.length === 0\">\n            <button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdown-language\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                <span class=\"wandbox-current-compiler-text\">\n                    <img src=\"./assets/image/compiling.gif\" alt=\"Compiling\" class=\"btn btn-default\" id=\"wandbox-compiling\">\n                </span>\n                <span class=\"wandbox-current-compiler-caret caret\"></span>\n            </button>\n        </ng-container>\n        <ng-container *ngIf=\"model.errorMessage.length !== 0\">\n            <span class=\"wandbox-current-compiler-text\">\n                <span class=\"alert alert-danger\">{{model.errorMessage}}</span>\n            </span>\n        </ng-container>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -920,6 +920,7 @@ module.exports = "<div class=\"row\" *ngIf=\"model.fetched\">\n    <div class=\"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__compiler_model__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compiler_service__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_local_storage_service__ = __webpack_require__("../../../../../src/app/components/common/local-storage.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -929,6 +930,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -952,14 +954,31 @@ var CompilerComponent = /** @class */ (function () {
             _this.model.languages = Object.keys(languageDic)
                 .map(function (key) { return languageDic[key]; });
             _this.model.fetched = true;
-            if (_this.storage.hasValue('language')) {
+            if (!_this.storage.hasValue('language')) {
                 var language_1 = _this.storage.getValue('language');
                 var langIndex = _this.model.languages.findIndex(function (v) { return v.languageName === language_1; });
                 if (langIndex === -1) {
                     _this.storage.removeValue('language');
                     langIndex = 0;
                 }
-                _this.clickLanguage(langIndex);
+                _this.selectLanguage(langIndex);
+            }
+            else {
+                // get default compiler.
+                var defaultCompiler_1 = __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].DEFAULT_COMPILER;
+                (function () {
+                    for (var _i = 0, _a = _this.model.languages.map(function (lang, index) { return ({ lang: lang, index: index }); }); _i < _a.length; _i++) {
+                        var l = _a[_i];
+                        for (var _b = 0, _c = l.lang.compilers.map(function (compiler, index) { return ({ compiler: compiler, index: index }); }); _b < _c.length; _b++) {
+                            var c = _c[_b];
+                            if (c.compiler.name === defaultCompiler_1) {
+                                _this.selectLanguage(l.index, c.index, null);
+                                // break multiple loop
+                                return;
+                            }
+                        }
+                    }
+                })();
             }
         }, function (err) {
             _this.model.errorMessage = 'failed loading compiler list!';
@@ -972,9 +991,15 @@ var CompilerComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    CompilerComponent.prototype.ngOnInit = function () {
-    };
-    CompilerComponent.prototype.clickLanguage = function (index, event) {
+    /**
+     * Activate selected language.
+     *
+     * @param {number} index
+     * @param {number} [selectCompilerIndex]
+     * @param {UIEvent} [event]
+     * @memberof CompilerComponent
+     */
+    CompilerComponent.prototype.selectLanguage = function (index, selectCompilerIndex, event) {
         var _this = this;
         if (event) {
             event.stopPropagation();
@@ -982,36 +1007,61 @@ var CompilerComponent = /** @class */ (function () {
         }
         this.model.selectedLangIndex = index;
         this.storage.setValue('language', this.selectedLanguage.languageName);
-        if (this.storage.hasValue('compiler')) {
+        if (selectCompilerIndex != null) {
+            this.selectCompiler(selectCompilerIndex);
+        }
+        else if (this.storage.hasValue('compiler')) {
             var compiler_1 = this.storage.getValue('compiler');
+            // find index of saved compiler key.
             var compilerIndex = this.selectedLanguage.compilers
                 .findIndex(function (v) { return _this.generateCompileOptionStorageKey(_this.selectedLanguage) === compiler_1; });
             if (compilerIndex === -1) {
                 this.storage.removeValue('compiler');
                 compilerIndex = 0;
             }
-            this.clickCompiler(compilerIndex);
+            this.selectCompiler(compilerIndex);
         }
         else {
-            this.selectedLanguage.selectedCompilerIndex = 0;
+            // default compiler is head of compiler list.
+            this.selectCompiler(0);
         }
         this.service.selectedLanguageNext(this.selectedLanguage);
         console.log('active', this.model.selectedLangIndex);
     };
-    CompilerComponent.prototype.clickCompiler = function (index) {
+    /**
+     * Activate selected compiler.
+     *
+     * @param {number} index
+     * @memberof CompilerComponent
+     */
+    CompilerComponent.prototype.selectCompiler = function (index) {
         var keyName = this.generateCompileOptionStorageKey(this.selectedLanguage);
         this.selectedLanguage.selectedCompilerIndex = index;
         this.storage.setValue('compiler', keyName);
+        // load compiler options.
         if (this.storage.hasValue(keyName)) {
             var options = this.storage.getValue(keyName);
             this.selectedLanguage.selectedCompiler.options = options;
         }
     };
+    /**
+     * Detection changed config.
+     *
+     * @param {number} index
+     * @param {OptionType} item
+     * @memberof CompilerComponent
+     */
     CompilerComponent.prototype.changeOption = function (index, item) {
         var keyName = this.generateCompileOptionStorageKey(this.selectedLanguage);
         this.storage.setValue(keyName, this.selectedLanguage.selectedCompiler.options);
         console.log('changed', index, item);
     };
+    /**
+     * Load template code from API for active language.
+     *
+     * @param {string} templateName
+     * @memberof CompilerComponent
+     */
     CompilerComponent.prototype.clickLoadTemplate = function (templateName) {
         this.service.loadTemplateNext(templateName);
         console.log('template', templateName);
