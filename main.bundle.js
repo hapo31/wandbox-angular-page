@@ -711,8 +711,6 @@ var CompileResultTabComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    CompileResultTabComponent.prototype.ngOnInit = function () {
-    };
     CompileResultTabComponent.prototype.activationSourceTab = function (index) {
         this.selectedResult.activeSourceTabIndex = index;
     };
@@ -731,7 +729,7 @@ var CompileResultTabComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], CompileResultTabComponent.prototype, "results", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
         __metadata("design:type", Object)
     ], CompileResultTabComponent.prototype, "changeTab", void 0);
     __decorate([
@@ -779,7 +777,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/compile/compile.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n    <div class=\"col-md-2\">\n        <a (click)=\"!model.compiling && postCompile()\" class=\"btn btn-default\" id=\"wandbox-compile\">\n            <ng-container *ngIf=\"model.compiling\">\n                <img src=\"./assets/image/compiling.gif\" alt=\"Compiling\" class=\"btn btn-default\" id=\"wandbox-compiling\">\n            </ng-container>\n            <ng-container *ngIf=\"!model.compiling\">\n                Run (or Ctrl+Enter)\n            </ng-container>\n        </a>\n    </div>\n    <div class=\"col-md-4\">\n        <label>\n            <input type=\"checkbox\" [(ngModel)]=\"model.enableEventSource\"> Enable Realtime Outout(Experimental)\n        </label>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-10\">\n        <compile-result-tab [activeIndex]=\"model.activeResultIndex\" [results]=\"model.compileResults\" (changeTab)=\"changeTab($event)\"\n            (removeTab)=\"removeTab($event)\"></compile-result-tab>\n    </div>\n    <div class=\"col-md-2\">\n        <div id=\"result-container-settings\">\n            <div class=\"checkbox\">\n                <label>\n                    <input class=\"nowrap-output-window\" type=\"checkbox\" value=\"nowrap-output-window\">No Wrap\n                </label>\n            </div>\n            <div class=\"checkbox\">\n                <label>\n                    <input class=\"expand-output-window\" type=\"checkbox\" value=\"expand-output-window\">Expand\n                </label>\n            </div>\n        </div>\n    </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n    <div class=\"col-md-4\">\n        <a (click)=\"postCompile()\" class=\"btn btn-default\" id=\"wandbox-compile\">\n            <ng-container *ngIf=\"model.compiling\">\n                <img src=\"./assets/image/compiling.gif\" alt=\"Compiling\" class=\"btn btn-default\" id=\"wandbox-compiling\">\n            </ng-container>\n            <ng-container *ngIf=\"!model.compiling\">\n                Run (or Ctrl+Enter)\n            </ng-container>\n        </a>\n    </div>\n    <div class=\"col-md-8\">\n        <label class=\"alert alert-danger\">\n            <input type=\"checkbox\" [(ngModel)]=\"model.enableEventSource\"> Enable Realtime Outout(Experimental)\n        </label>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-10\">\n        <compile-result-tab [activeIndex]=\"model.activeResultIndex\" [results]=\"model.compileResults\" (changeTab)=\"changeTab($event)\"\n            (removeTab)=\"removeTab($event)\"></compile-result-tab>\n    </div>\n    <div class=\"col-md-2\">\n        <div id=\"result-container-settings\">\n            <div class=\"checkbox\">\n                <label>\n                    <input class=\"nowrap-output-window\" type=\"checkbox\" value=\"nowrap-output-window\">No Wrap\n                </label>\n            </div>\n            <div class=\"checkbox\">\n                <label>\n                    <input class=\"expand-output-window\" type=\"checkbox\" value=\"expand-output-window\">Expand\n                </label>\n            </div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -792,6 +790,7 @@ module.exports = "<div class=\"row\">\n    <div class=\"col-md-2\">\n        <a 
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__ = __webpack_require__("../../../../../src/app/components/common/run-compile.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compile_model__ = __webpack_require__("../../../../../src/app/components/compile/compile.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__compiler_compiler_model__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__ = __webpack_require__("../../../../../src/app/components/compile-result-tab/compile-result-tab.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -801,6 +800,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -820,6 +820,9 @@ var CompileComponent = /** @class */ (function () {
      */
     CompileComponent.prototype.postCompile = function () {
         var _this = this;
+        if (this.model.compiling) {
+            return;
+        }
         this.model.compiling = true;
         var result = new __WEBPACK_IMPORTED_MODULE_2__compile_model__["b" /* CompileResultModel */]();
         result.tabName = (this.model.compileCount + 1).toString();
@@ -902,16 +905,20 @@ var CompileComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
         __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__compiler_compiler_model__["b" /* LanguageModel */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__compiler_compiler_model__["b" /* LanguageModel */]) === "function" && _a || Object)
     ], CompileComponent.prototype, "selectedLanguage", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]),
+        __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]) === "function" && _b || Object)
+    ], CompileComponent.prototype, "resultTabComponent", void 0);
     CompileComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'wandbox-compile',
             template: __webpack_require__("../../../../../src/app/components/compile/compile.component.html"),
             styles: [__webpack_require__("../../../../../src/app/components/compile/compile.component.css")],
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */]) === "function" && _c || Object])
     ], CompileComponent);
     return CompileComponent;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=compile.component.js.map
@@ -1400,7 +1407,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/editor-tab/editor-tab.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wandbox-editor\">\n    <ul id=\"wandbox-editor-header\" class=\"nav nav-tabs\" role=\"tablist\">\n        <li *ngFor=\"let tab of tabs; let i=index;\" [class.active]=\"tab.isActive\" (click)=\"tabClick(i)\">\n            <a class=\"wandbox-editor-name-tab\" [class.first]=\"i === 0\" role=\"tab\" data-toggle=\"tab\">\n                <i class=\"glyphicon glyphicon-file\"></i>\n                <span *ngIf=\"!tab.editing\" class=\"wandbox-renamable\" (dblclick)=\"editTab(i, fileNameInput)\">{{tab.fileName}}</span>\n                <input #fileNameInput class=\"wandbox-renamable\" (blur)=\"tab.editing = false;\" (keypress)=\"editInputKeyPress(i, $event)\" [hidden]=\"!tab.editing\" [(ngModel)]=\"tab.fileName\" />\n                <button *ngIf=\"i !== 0\" class=\"glyphicon glyphicon-remove close\" (click)=\"removeTab(i)\"></button>\n            </a>\n        </li>\n        <li>\n            <a id=\"wandbox-editor-add-tab\" class=\"btn btn-default\" (click)=\"addTab()\">\n                <i class=\"glyphicon glyphicon-plus\"></i>\n            </a>\n        </li>\n    </ul>\n    <div class=\"clearfix\"></div>\n    <div id=\"wandbox-editor-content\" class=\"tab-content\">\n        <wandbox-codemirror [config]=\"config\" (change)=\"tabChanged($event)\" [value]=\"tabs[activeIndex].editorContent\">\n\n        </wandbox-codemirror>\n    </div>\n</div>"
+module.exports = "<div class=\"wandbox-editor\">\n    <ul id=\"wandbox-editor-header\" class=\"nav nav-tabs\" role=\"tablist\">\n        <li *ngFor=\"let tab of tabs; let i=index;\" [class.active]=\"tab.isActive\" (click)=\"tabClick(i)\">\n            <a class=\"wandbox-editor-name-tab\" [class.first]=\"i === 0\" role=\"tab\" data-toggle=\"tab\">\n                <i class=\"glyphicon glyphicon-file\"></i>\n                <span *ngIf=\"!tab.editing\" class=\"wandbox-renamable\" (dblclick)=\"editTab(i, fileNameInput)\">{{tab.fileName}}</span>\n                <input #fileNameInput class=\"wandbox-renamable\" (blur)=\"tab.editing = false;\" (keypress)=\"editInputKeyPress(i, $event)\" [hidden]=\"!tab.editing\"\n                    [(ngModel)]=\"tab.fileName\" />\n                <button *ngIf=\"i !== 0\" class=\"glyphicon glyphicon-remove close\" (click)=\"removeTab(i)\"></button>\n            </a>\n        </li>\n        <li>\n            <a id=\"wandbox-editor-add-tab\" class=\"btn btn-default\" (click)=\"addTab()\">\n                <i class=\"glyphicon glyphicon-plus\"></i>\n            </a>\n        </li>\n    </ul>\n    <div class=\"clearfix\"></div>\n    <div id=\"wandbox-editor-content\" class=\"tab-content\">\n        <wandbox-codemirror [config]=\"config\" (compileCommand)=\"onCompileCommand()\" (change)=\"tabChanged($event)\" [value]=\"tabs[activeIndex].editorContent\">\n\n        </wandbox-codemirror>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -1434,6 +1441,7 @@ var TabComponent = /** @class */ (function () {
         var _this = this;
         this.storage = storage;
         this.changed = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
+        this.compileCommand = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this.tabCount = 1;
         this.saveContentSubject = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Subject"]();
         this.saveContentSubject.asObservable()
@@ -1442,9 +1450,6 @@ var TabComponent = /** @class */ (function () {
             _this.storage.setValue('tabs', _this.tabs);
         });
     }
-    TabComponent.prototype.ngAfterViewInit = function () {
-        console.log('editor-tab', this.tabs);
-    };
     /**
      * Tab element click event.
      *
@@ -1562,6 +1567,9 @@ var TabComponent = /** @class */ (function () {
         var activeIndex = this.activeIndex - 1 < 0 ? this.tabs.length - 1 : this.activeIndex - 1;
         this.toggleActive(activeIndex);
     };
+    TabComponent.prototype.onCompileCommand = function () {
+        this.compileCommand.emit();
+    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
         __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__editor_editor_model__["b" /* EditorConfigModel */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__editor_editor_model__["b" /* EditorConfigModel */]) === "function" && _a || Object)
@@ -1578,6 +1586,10 @@ var TabComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
         __metadata("design:type", Object)
     ], TabComponent.prototype, "changed", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
+        __metadata("design:type", Object)
+    ], TabComponent.prototype, "compileCommand", void 0);
     TabComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'editor-tab',
@@ -1630,7 +1642,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/editor/editor.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n    <div class=\"col-md-10\">\n        <editor-tab (changed)=\"tabChanged($event)\" [tabs]=\"model.tabs\" [config]=\"model.config\" [activeIndex]=\"model.activeTabIndex\"></editor-tab>\n    </div>\n    <div class=\"col-md-2\" id=\"wandbox-editor-settings\">\n        <label>Editor settings:</label>\n        <div class=\"checkbox\">\n            <select class=\"form-control wandbox-select\" [(ngModel)]=\"model.keyMap\" (change)=\"changeConfig('keyMap', model.keyMap)\">\n                <option value=\"default\" selected=\"\">editor: default</option>\n                <option value=\"vim\">editor: Vim</option>\n                <option value=\"emacs\">editor: Emacs</option>\n            </select>\n        </div>\n        <div class=\"checkbox\">\n            <select class=\"wandbox-spaces-or-tab form-control\" [(ngModel)]=\"model.tabSize\" (change)=\"changeConfig('tabSize', model.tabSize)\">\n                <option value=\"2\">tab: 2-spaces</option>\n                <option value=\"4\" selected=\"\">tab: 4-spaces</option>\n                <option value=\"8\">tab: 8-spaces</option>\n            </select>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"indent-with-tabs\" type=\"checkbox\" [(ngModel)]=\"model.indentWithTabs\" (change)=\"changeConfig('indentWithTabs', model.indentWithTabs)\"\n                    checked=\"\"> Indent with Tabs\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"smart-indent\" type=\"checkbox\" [(ngModel)]=\"model.smartIndent\" (change)=\"changeConfig('smartIndent', model.smartIndent)\"\n                    checked=\"\"> Smart Indent\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"expand-editor\" type=\"checkbox\" value=\"expand-editor\" [(ngModel)]=\"model.expand\"> Expand\n            </label>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-12\">\n        <p id=\"compile_command\">\n            <code *ngIf=\"model.selectedLanguage != null && model.selectedLanguage.selectedCompiler != null\">\n                $ {{model.selectedLanguage.selectedCompiler.compileCommand}} {{model.selectedLanguage.selectedCompiler.displayFlags}}\n            </code>\n        </p>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-10\">\n        <div class=\"panel-group\" role=\"tablist\" id=\"wandbox-stdin-accordion\" aria-multiselectable=\"true\">\n            <div class=\"panel panel-default\">\n                <a id=\"wandbox-stdin-button\" data-toggle=\"collapse\" data-parent=\"#wandbox-stdin-accordion\" href=\"#wandbox-stdin-body\" aria-expanded=\"true\">\n                    Stdin\n                </a>\n                <div id=\"wandbox-stdin-body\" class=\"panel-collapse collapse\">\n                    <textarea class=\"form-control\" [(ngModel)]=\"model.stdin\"></textarea>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<wandbox-compile [tabs]=\"model.tabs\" [stdin]=\"model.stdin\" [selectedLanguage]=\"model.selectedLanguage\"></wandbox-compile>\n"
+module.exports = "<div class=\"row\">\n    <div class=\"col-md-10\">\n        <editor-tab (compileCommand)=\"onCompileCommand()\" (changed)=\"tabChanged($event)\" [tabs]=\"model.tabs\" [config]=\"model.config\"\n            [activeIndex]=\"model.activeTabIndex\"></editor-tab>\n    </div>\n    <div class=\"col-md-2\" id=\"wandbox-editor-settings\">\n        <label>Editor settings:</label>\n        <div class=\"checkbox\">\n            <select class=\"form-control wandbox-select\" [(ngModel)]=\"model.keyMap\" (change)=\"changeConfig('keyMap', model.keyMap)\">\n                <option value=\"default\" selected=\"\">editor: default</option>\n                <option value=\"vim\">editor: Vim</option>\n                <option value=\"emacs\">editor: Emacs</option>\n            </select>\n        </div>\n        <div class=\"checkbox\">\n            <select class=\"wandbox-spaces-or-tab form-control\" [(ngModel)]=\"model.tabSize\" (change)=\"changeConfig('tabSize', model.tabSize)\">\n                <option value=\"2\">tab: 2-spaces</option>\n                <option value=\"4\" selected=\"\">tab: 4-spaces</option>\n                <option value=\"8\">tab: 8-spaces</option>\n            </select>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"indent-with-tabs\" type=\"checkbox\" [(ngModel)]=\"model.indentWithTabs\" (change)=\"changeConfig('indentWithTabs', model.indentWithTabs)\"\n                    checked=\"\"> Indent with Tabs\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"smart-indent\" type=\"checkbox\" [(ngModel)]=\"model.smartIndent\" (change)=\"changeConfig('smartIndent', model.smartIndent)\"\n                    checked=\"\"> Smart Indent\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"expand-editor\" type=\"checkbox\" value=\"expand-editor\" [(ngModel)]=\"model.expand\"> Expand\n            </label>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-12\">\n        <p id=\"compile_command\">\n            <code *ngIf=\"model.selectedLanguage != null && model.selectedLanguage.selectedCompiler != null\">\n                $ {{model.selectedLanguage.selectedCompiler.compileCommand}} {{model.selectedLanguage.selectedCompiler.displayFlags}}\n            </code>\n        </p>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-10\">\n        <div class=\"panel-group\" role=\"tablist\" id=\"wandbox-stdin-accordion\" aria-multiselectable=\"true\">\n            <div class=\"panel panel-default\">\n                <a id=\"wandbox-stdin-button\" data-toggle=\"collapse\" data-parent=\"#wandbox-stdin-accordion\" href=\"#wandbox-stdin-body\" aria-expanded=\"true\">\n                    Stdin\n                </a>\n                <div id=\"wandbox-stdin-body\" class=\"panel-collapse collapse\">\n                    <textarea class=\"form-control\" [(ngModel)]=\"model.stdin\"></textarea>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<wandbox-compile [tabs]=\"model.tabs\" [stdin]=\"model.stdin\" [selectedLanguage]=\"model.selectedLanguage\"></wandbox-compile>\n"
 
 /***/ }),
 
@@ -1641,11 +1653,12 @@ module.exports = "<div class=\"row\">\n    <div class=\"col-md-10\">\n        <e
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditorComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__editor_model__ = __webpack_require__("../../../../../src/app/components/editor/editor.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editor_tab_editor_tab_model__ = __webpack_require__("../../../../../src/app/components/editor-tab/editor-tab.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__editor_service__ = __webpack_require__("../../../../../src/app/components/editor/editor.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__compiler_compiler_service__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_local_storage_service__ = __webpack_require__("../../../../../src/app/components/common/local-storage.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_language_mime_util__ = __webpack_require__("../../../../../src/app/components/common/language-mime.util.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compile_compile_component__ = __webpack_require__("../../../../../src/app/components/compile/compile.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__editor_tab_editor_tab_model__ = __webpack_require__("../../../../../src/app/components/editor-tab/editor-tab.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__editor_service__ = __webpack_require__("../../../../../src/app/components/editor/editor.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__ = __webpack_require__("../../../../../src/app/components/common/local-storage.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_language_mime_util__ = __webpack_require__("../../../../../src/app/components/common/language-mime.util.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1662,6 +1675,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var EditorComponent = /** @class */ (function () {
     function EditorComponent(service, compiler, storage) {
         var _this = this;
@@ -1671,7 +1685,7 @@ var EditorComponent = /** @class */ (function () {
         this.model = new __WEBPACK_IMPORTED_MODULE_1__editor_model__["a" /* EditorComponentModel */]();
         // Detection changed mime event from compiler changing.
         this.compiler.selectedLanguage$.subscribe(function (language) {
-            var mimeStr = Object(__WEBPACK_IMPORTED_MODULE_6__common_language_mime_util__["a" /* mime */])(language.languageName);
+            var mimeStr = Object(__WEBPACK_IMPORTED_MODULE_7__common_language_mime_util__["a" /* mime */])(language.languageName);
             _this.model.mode = mimeStr;
             _this.model.selectedLanguage = language;
             _this.changeConfig('mode', mimeStr);
@@ -1691,7 +1705,7 @@ var EditorComponent = /** @class */ (function () {
         }
         else {
             // initialize tab data.
-            var firstTab = new __WEBPACK_IMPORTED_MODULE_2__editor_tab_editor_tab_model__["a" /* TabModel */]();
+            var firstTab = new __WEBPACK_IMPORTED_MODULE_3__editor_tab_editor_tab_model__["a" /* TabModel */]();
             firstTab.isActive = true;
             firstTab.fileName = '';
             firstTab.editorContent = '';
@@ -1727,17 +1741,24 @@ var EditorComponent = /** @class */ (function () {
         this.model.tabs[this.model.activeTabIndex].editorContent = event.data.editorContent;
         this.service.changeEditorTabNext(event.data.editorContent);
     };
+    EditorComponent.prototype.onCompileCommand = function () {
+        this.compileComponent.postCompile();
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_2__compile_compile_component__["a" /* CompileComponent */]),
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__compile_compile_component__["a" /* CompileComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__compile_compile_component__["a" /* CompileComponent */]) === "function" && _a || Object)
+    ], EditorComponent.prototype, "compileComponent", void 0);
     EditorComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'wandbox-editor',
             template: __webpack_require__("../../../../../src/app/components/editor/editor.component.html"),
             styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")],
-            providers: [__WEBPACK_IMPORTED_MODULE_3__editor_service__["a" /* EditorService */]]
+            providers: [__WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]]
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__editor_service__["a" /* EditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__editor_service__["a" /* EditorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__compiler_compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__compiler_compiler_service__["a" /* CompilerService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _d || Object])
     ], EditorComponent);
     return EditorComponent;
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=editor.component.js.map
