@@ -402,6 +402,9 @@ var WandboxCodemirrorComponent = /** @class */ (function () {
             'Ctrl-Enter': function (cm) {
                 _this.compileCommand.emit();
             },
+            'Cmd-Enter': function (cm) {
+                _this.compileCommand.emit();
+            },
             'Ctrl-Shift-T': function (cm) {
                 console.log('hogehoge');
             }
