@@ -66,31 +66,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var AppComponent = /** @class */ (function () {
+var AppComponent = (function () {
     function AppComponent(compile, storage) {
         this.compile = compile;
     }
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1__components_editor_editor_component__["a" /* EditorComponent */]),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__components_editor_editor_component__["a" /* EditorComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__components_editor_editor_component__["a" /* EditorComponent */]) === "function" && _a || Object)
-    ], AppComponent.prototype, "editorComponent", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_2__components_compiler_compiler_component__["a" /* CompilerComponent */]),
-        __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__components_compiler_compiler_component__["a" /* CompilerComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__components_compiler_compiler_component__["a" /* CompilerComponent */]) === "function" && _b || Object)
-    ], AppComponent.prototype, "compilerComponent", void 0);
-    AppComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'app-root',
-            template: __webpack_require__("../../../../../src/app/app.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/app.component.css")],
-            providers: [__WEBPACK_IMPORTED_MODULE_3__components_common_run_compile_service__["a" /* RunCompileService */]]
-        }),
-        __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__components_common_run_compile_service__["a" /* RunCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__components_common_run_compile_service__["a" /* RunCompileService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__components_common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__components_common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _d || Object])
-    ], AppComponent);
     return AppComponent;
-    var _a, _b, _c, _d;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1__components_editor_editor_component__["a" /* EditorComponent */]),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__components_editor_editor_component__["a" /* EditorComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__components_editor_editor_component__["a" /* EditorComponent */]) === "function" && _a || Object)
+], AppComponent.prototype, "editorComponent", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_2__components_compiler_compiler_component__["a" /* CompilerComponent */]),
+    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__components_compiler_compiler_component__["a" /* CompilerComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__components_compiler_compiler_component__["a" /* CompilerComponent */]) === "function" && _b || Object)
+], AppComponent.prototype, "compilerComponent", void 0);
+AppComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'app-root',
+        template: __webpack_require__("../../../../../src/app/app.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/app.component.css")],
+        providers: [__WEBPACK_IMPORTED_MODULE_3__components_common_run_compile_service__["a" /* RunCompileService */]]
+    }),
+    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__components_common_run_compile_service__["a" /* RunCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__components_common_run_compile_service__["a" /* RunCompileService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__components_common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__components_common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _d || Object])
+], AppComponent);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -142,40 +142,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var AppModule = /** @class */ (function () {
+var AppModule = (function () {
     function AppModule() {
     }
-    AppModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["L" /* NgModule */])({
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */],
-            ],
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__components_codemirror_wb_codemirror_component__["a" /* WandboxCodemirrorComponent */],
-                __WEBPACK_IMPORTED_MODULE_6__components_editor_editor_component__["a" /* EditorComponent */],
-                __WEBPACK_IMPORTED_MODULE_7__components_header_header_component__["a" /* HeaderComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components_sponsors_sponsors_component__["a" /* SponsorsComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__components_compiler_compiler_component__["a" /* CompilerComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components_compile_compile_component__["a" /* CompileComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__components_editor_tab_editor_tab_component__["a" /* TabComponent */],
-                __WEBPACK_IMPORTED_MODULE_17__components_compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]
-            ],
-            exports: [],
-            providers: [
-                __WEBPACK_IMPORTED_MODULE_14__components_api_template_service__["a" /* TemplateAPIService */],
-                __WEBPACK_IMPORTED_MODULE_13__components_api_compiler_list_service__["a" /* CompilerListAPIService */],
-                __WEBPACK_IMPORTED_MODULE_12__components_compiler_compiler_service__["a" /* CompilerService */],
-                __WEBPACK_IMPORTED_MODULE_15__components_api_compile_service__["a" /* PostCompileService */],
-                __WEBPACK_IMPORTED_MODULE_16__components_common_local_storage_service__["a" /* LocalStorageService */]
-            ],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
-        })
-    ], AppModule);
     return AppModule;
 }());
+AppModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["L" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */],
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */],
+            __WEBPACK_IMPORTED_MODULE_5__components_codemirror_wb_codemirror_component__["a" /* WandboxCodemirrorComponent */],
+            __WEBPACK_IMPORTED_MODULE_6__components_editor_editor_component__["a" /* EditorComponent */],
+            __WEBPACK_IMPORTED_MODULE_7__components_header_header_component__["a" /* HeaderComponent */],
+            __WEBPACK_IMPORTED_MODULE_8__components_sponsors_sponsors_component__["a" /* SponsorsComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_compiler_compiler_component__["a" /* CompilerComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__components_compile_compile_component__["a" /* CompileComponent */],
+            __WEBPACK_IMPORTED_MODULE_11__components_editor_tab_editor_tab_component__["a" /* TabComponent */],
+            __WEBPACK_IMPORTED_MODULE_17__components_compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]
+        ],
+        exports: [],
+        providers: [
+            __WEBPACK_IMPORTED_MODULE_14__components_api_template_service__["a" /* TemplateAPIService */],
+            __WEBPACK_IMPORTED_MODULE_13__components_api_compiler_list_service__["a" /* CompilerListAPIService */],
+            __WEBPACK_IMPORTED_MODULE_12__components_compiler_compiler_service__["a" /* CompilerService */],
+            __WEBPACK_IMPORTED_MODULE_15__components_api_compile_service__["a" /* PostCompileService */],
+            __WEBPACK_IMPORTED_MODULE_16__components_common_local_storage_service__["a" /* LocalStorageService */]
+        ],
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
+    })
+], AppModule);
 
 //# sourceMappingURL=app.module.js.map
 
@@ -203,7 +203,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var PostCompileService = /** @class */ (function () {
+var PostCompileService = (function () {
     function PostCompileService(http) {
         this.http = http;
     }
@@ -220,14 +220,14 @@ var PostCompileService = /** @class */ (function () {
         pes.post(param);
         return pes.eventSource;
     };
-    PostCompileService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
-    ], PostCompileService);
     return PostCompileService;
-    var _a;
 }());
+PostCompileService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
+], PostCompileService);
 
+var _a;
 //# sourceMappingURL=compile.service.js.map
 
 /***/ }),
@@ -255,21 +255,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var CompilerListAPIService = /** @class */ (function () {
+var CompilerListAPIService = (function () {
     function CompilerListAPIService(http) {
         this.http = http;
     }
     CompilerListAPIService.prototype.fetch = function () {
         return this.http.get(__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseApiUrl + 'list.json');
     };
-    CompilerListAPIService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
-    ], CompilerListAPIService);
     return CompilerListAPIService;
-    var _a;
 }());
+CompilerListAPIService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
+], CompilerListAPIService);
 
+var _a;
 //# sourceMappingURL=compiler-list.service.js.map
 
 /***/ }),
@@ -294,21 +294,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var TemplateAPIService = /** @class */ (function () {
+var TemplateAPIService = (function () {
     function TemplateAPIService(http) {
         this.http = http;
     }
     TemplateAPIService.prototype.fetch = function (templateName) {
         return this.http.get(__WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].baseApiUrl + 'template/' + templateName);
     };
-    TemplateAPIService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
-    ], TemplateAPIService);
     return TemplateAPIService;
-    var _a;
 }());
+TemplateAPIService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
+], TemplateAPIService);
 
+var _a;
 //# sourceMappingURL=template.service.js.map
 
 /***/ }),
@@ -352,7 +352,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var WandboxCodemirrorComponent = /** @class */ (function () {
+var WandboxCodemirrorComponent = (function () {
     function WandboxCodemirrorComponent(service, element) {
         var _this = this;
         this.service = service;
@@ -434,46 +434,46 @@ var WandboxCodemirrorComponent = /** @class */ (function () {
         });
         this.codemirror.refresh();
     };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", String)
-    ], WandboxCodemirrorComponent.prototype, "value", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__editor_editor_model__["b" /* EditorConfigModel */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__editor_editor_model__["b" /* EditorConfigModel */]) === "function" && _a || Object)
-    ], WandboxCodemirrorComponent.prototype, "config", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", Object)
-    ], WandboxCodemirrorComponent.prototype, "blur", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", Object)
-    ], WandboxCodemirrorComponent.prototype, "focus", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", Object)
-    ], WandboxCodemirrorComponent.prototype, "change", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", Object)
-    ], WandboxCodemirrorComponent.prototype, "compileCommand", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])('host'),
-        __metadata("design:type", Object)
-    ], WandboxCodemirrorComponent.prototype, "host", void 0);
-    WandboxCodemirrorComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'wandbox-codemirror',
-            styles: [__webpack_require__("../../../../../src/app/components/codemirror/wb-codemirror.component.css")],
-            template: "\n        <div class=\"wandbox-codemirror-container\" [class.expand]=\"config.expand\">\n            <textarea #host></textarea>\n        </div>\n  "
-        }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__editor_editor_service__["a" /* EditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__editor_editor_service__["a" /* EditorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _c || Object])
-    ], WandboxCodemirrorComponent);
     return WandboxCodemirrorComponent;
-    var _a, _b, _c;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", String)
+], WandboxCodemirrorComponent.prototype, "value", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__editor_editor_model__["b" /* EditorConfigModel */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__editor_editor_model__["b" /* EditorConfigModel */]) === "function" && _a || Object)
+], WandboxCodemirrorComponent.prototype, "config", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
+    __metadata("design:type", Object)
+], WandboxCodemirrorComponent.prototype, "blur", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
+    __metadata("design:type", Object)
+], WandboxCodemirrorComponent.prototype, "focus", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
+    __metadata("design:type", Object)
+], WandboxCodemirrorComponent.prototype, "change", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
+    __metadata("design:type", Object)
+], WandboxCodemirrorComponent.prototype, "compileCommand", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])('host'),
+    __metadata("design:type", Object)
+], WandboxCodemirrorComponent.prototype, "host", void 0);
+WandboxCodemirrorComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'wandbox-codemirror',
+        styles: [__webpack_require__("../../../../../src/app/components/codemirror/wb-codemirror.component.css")],
+        template: "\n        <div class=\"wandbox-codemirror-container\" [class.expand]=\"config.expand\">\n            <textarea #host></textarea>\n        </div>\n  "
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__editor_editor_service__["a" /* EditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__editor_editor_service__["a" /* EditorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _c || Object])
+], WandboxCodemirrorComponent);
 
+var _a, _b, _c;
 //# sourceMappingURL=wb-codemirror.component.js.map
 
 /***/ }),
@@ -544,7 +544,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var LocalStorageService = /** @class */ (function () {
+var LocalStorageService = (function () {
     function LocalStorageService() {
         this.storage = localStorage;
     }
@@ -561,12 +561,12 @@ var LocalStorageService = /** @class */ (function () {
     LocalStorageService.prototype.hasValue = function (key) {
         return this.getValue(key) != null;
     };
-    LocalStorageService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [])
-    ], LocalStorageService);
     return LocalStorageService;
 }());
+LocalStorageService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], LocalStorageService);
 
 //# sourceMappingURL=local-storage.service.js.map
 
@@ -593,7 +593,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var RunCompileService = /** @class */ (function () {
+var RunCompileService = (function () {
     function RunCompileService(compileApi) {
         this.compileApi = compileApi;
         this.runCompileSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["Subject"]();
@@ -663,14 +663,14 @@ var RunCompileService = /** @class */ (function () {
             'runtime-option-raw': runtimeOptionRaw
         };
     };
-    RunCompileService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__api_compile_service__["a" /* PostCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__api_compile_service__["a" /* PostCompileService */]) === "function" && _a || Object])
-    ], RunCompileService);
     return RunCompileService;
-    var _a;
 }());
+RunCompileService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__api_compile_service__["a" /* PostCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__api_compile_service__["a" /* PostCompileService */]) === "function" && _a || Object])
+], RunCompileService);
 
+var _a;
 //# sourceMappingURL=run-compile.service.js.map
 
 /***/ }),
@@ -720,7 +720,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var CompileResultTabComponent = /** @class */ (function () {
+var CompileResultTabComponent = (function () {
     function CompileResultTabComponent(compileService) {
         this.compileService = compileService;
         this.changeTab = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
@@ -751,34 +751,34 @@ var CompileResultTabComponent = /** @class */ (function () {
         }
         console.log(this.activeIndex);
     };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", Object)
-    ], CompileResultTabComponent.prototype, "results", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", Object)
-    ], CompileResultTabComponent.prototype, "changeTab", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", Object)
-    ], CompileResultTabComponent.prototype, "removeTab", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", Object)
-    ], CompileResultTabComponent.prototype, "activeIndex", void 0);
-    CompileResultTabComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'compile-result-tab',
-            template: __webpack_require__("../../../../../src/app/components/compile-result-tab/compile-result-tab.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/components/compile-result-tab/compile-result-tab.component.css")]
-        }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__common_run_compile_service__["a" /* RunCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__common_run_compile_service__["a" /* RunCompileService */]) === "function" && _a || Object])
-    ], CompileResultTabComponent);
     return CompileResultTabComponent;
-    var _a;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", Object)
+], CompileResultTabComponent.prototype, "results", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
+    __metadata("design:type", Object)
+], CompileResultTabComponent.prototype, "changeTab", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
+    __metadata("design:type", Object)
+], CompileResultTabComponent.prototype, "removeTab", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", Object)
+], CompileResultTabComponent.prototype, "activeIndex", void 0);
+CompileResultTabComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'compile-result-tab',
+        template: __webpack_require__("../../../../../src/app/components/compile-result-tab/compile-result-tab.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/compile-result-tab/compile-result-tab.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__common_run_compile_service__["a" /* RunCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__common_run_compile_service__["a" /* RunCompileService */]) === "function" && _a || Object])
+], CompileResultTabComponent);
 
+var _a;
 //# sourceMappingURL=compile-result-tab.component.js.map
 
 /***/ }),
@@ -832,7 +832,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var CompileComponent = /** @class */ (function () {
+var CompileComponent = (function () {
     function CompileComponent(runCompile) {
         this.runCompile = runCompile;
         this.compile = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
@@ -916,38 +916,38 @@ var CompileComponent = /** @class */ (function () {
     CompileComponent.prototype.changeTab = function (index) {
         this.model.activeResultIndex = index;
     };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", Object)
-    ], CompileComponent.prototype, "compile", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", Object)
-    ], CompileComponent.prototype, "tabs", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", String)
-    ], CompileComponent.prototype, "stdin", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__compiler_compiler_model__["b" /* LanguageModel */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__compiler_compiler_model__["b" /* LanguageModel */]) === "function" && _a || Object)
-    ], CompileComponent.prototype, "selectedLanguage", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]),
-        __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]) === "function" && _b || Object)
-    ], CompileComponent.prototype, "resultTabComponent", void 0);
-    CompileComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'wandbox-compile',
-            template: __webpack_require__("../../../../../src/app/components/compile/compile.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/components/compile/compile.component.css")],
-        }),
-        __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */]) === "function" && _c || Object])
-    ], CompileComponent);
     return CompileComponent;
-    var _a, _b, _c;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
+    __metadata("design:type", Object)
+], CompileComponent.prototype, "compile", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", Object)
+], CompileComponent.prototype, "tabs", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", String)
+], CompileComponent.prototype, "stdin", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__compiler_compiler_model__["b" /* LanguageModel */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__compiler_compiler_model__["b" /* LanguageModel */]) === "function" && _a || Object)
+], CompileComponent.prototype, "selectedLanguage", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]),
+    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]) === "function" && _b || Object)
+], CompileComponent.prototype, "resultTabComponent", void 0);
+CompileComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'wandbox-compile',
+        template: __webpack_require__("../../../../../src/app/components/compile/compile.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/compile/compile.component.css")],
+    }),
+    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */]) === "function" && _c || Object])
+], CompileComponent);
 
+var _a, _b, _c;
 //# sourceMappingURL=compile.component.js.map
 
 /***/ }),
@@ -959,7 +959,7 @@ var CompileComponent = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CompileResultModel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CompileComponentModel; });
 /* unused harmony export EventOutput */
-var CompileResultModel = /** @class */ (function () {
+var CompileResultModel = (function () {
     function CompileResultModel() {
         this.activeSourceTabIndex = 0;
         this.outputLines = [];
@@ -975,7 +975,7 @@ var CompileResultModel = /** @class */ (function () {
     return CompileResultModel;
 }());
 
-var CompileComponentModel = /** @class */ (function () {
+var CompileComponentModel = (function () {
     function CompileComponentModel() {
         this.compileResults = new Array();
         this.activeResultIndex = -1;
@@ -986,7 +986,7 @@ var CompileComponentModel = /** @class */ (function () {
     return CompileComponentModel;
 }());
 
-var EventOutput = /** @class */ (function () {
+var EventOutput = (function () {
     function EventOutput() {
     }
     return EventOutput;
@@ -1045,7 +1045,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var CompilerComponent = /** @class */ (function () {
+var CompilerComponent = (function () {
     function CompilerComponent(service, storage) {
         var _this = this;
         this.service = service;
@@ -1179,18 +1179,18 @@ var CompilerComponent = /** @class */ (function () {
     CompilerComponent.prototype.generateCompileOptionStorageKey = function (language) {
         return "compilerOptions-" + language.languageName + "-" + language.selectedCompiler.displayName + "-" + language.selectedCompiler.version;
     };
-    CompilerComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'wandbox-compiler',
-            template: __webpack_require__("../../../../../src/app/components/compiler/compiler.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/components/compiler/compiler.component.css")],
-        }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__compiler_service__["a" /* CompilerService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _b || Object])
-    ], CompilerComponent);
     return CompilerComponent;
-    var _a, _b;
 }());
+CompilerComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'wandbox-compiler',
+        template: __webpack_require__("../../../../../src/app/components/compiler/compiler.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/compiler/compiler.component.css")],
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__compiler_service__["a" /* CompilerService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _b || Object])
+], CompilerComponent);
 
+var _a, _b;
 //# sourceMappingURL=compiler.component.js.map
 
 /***/ }),
@@ -1203,7 +1203,7 @@ var CompilerComponent = /** @class */ (function () {
 /* unused harmony export CompilerModel */
 /* unused harmony export CompilerOptionModel */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CompilerComponentModel; });
-var LanguageModel = /** @class */ (function () {
+var LanguageModel = (function () {
     function LanguageModel() {
         this.languageName = '';
         this.mime = '';
@@ -1277,7 +1277,7 @@ var LanguageModel = /** @class */ (function () {
     return LanguageModel;
 }());
 
-var CompilerModel = /** @class */ (function () {
+var CompilerModel = (function () {
     function CompilerModel() {
     }
     Object.defineProperty(CompilerModel.prototype, "displayFlags", {
@@ -1312,13 +1312,13 @@ var CompilerModel = /** @class */ (function () {
     return CompilerModel;
 }());
 
-var CompilerOptionModel = /** @class */ (function () {
+var CompilerOptionModel = (function () {
     function CompilerOptionModel() {
     }
     return CompilerOptionModel;
 }());
 
-var CompilerComponentModel = /** @class */ (function () {
+var CompilerComponentModel = (function () {
     function CompilerComponentModel() {
         this.selectedLangIndex = 0;
         this.languages = new Array();
@@ -1358,7 +1358,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var CompilerService = /** @class */ (function () {
+var CompilerService = (function () {
     function CompilerService(listApi, templateApi) {
         this.listApi = listApi;
         this.templateApi = templateApi;
@@ -1401,14 +1401,14 @@ var CompilerService = /** @class */ (function () {
     CompilerService.prototype.loadTemplateNext = function (templateName) {
         this.loadTemplateSubject.next(templateName);
     };
-    CompilerService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__api_compiler_list_service__["a" /* CompilerListAPIService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__api_compiler_list_service__["a" /* CompilerListAPIService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__api_template_service__["a" /* TemplateAPIService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__api_template_service__["a" /* TemplateAPIService */]) === "function" && _b || Object])
-    ], CompilerService);
     return CompilerService;
-    var _a, _b;
 }());
+CompilerService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__api_compiler_list_service__["a" /* CompilerListAPIService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__api_compiler_list_service__["a" /* CompilerListAPIService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__api_template_service__["a" /* TemplateAPIService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__api_template_service__["a" /* TemplateAPIService */]) === "function" && _b || Object])
+], CompilerService);
 
+var _a, _b;
 //# sourceMappingURL=compiler.service.js.map
 
 /***/ }),
@@ -1463,7 +1463,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var TabComponent = /** @class */ (function () {
+var TabComponent = (function () {
     function TabComponent(storage) {
         var _this = this;
         this.storage = storage;
@@ -1597,38 +1597,38 @@ var TabComponent = /** @class */ (function () {
     TabComponent.prototype.onCompileCommand = function () {
         this.compileCommand.emit();
     };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__editor_editor_model__["b" /* EditorConfigModel */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__editor_editor_model__["b" /* EditorConfigModel */]) === "function" && _a || Object)
-    ], TabComponent.prototype, "config", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", Object)
-    ], TabComponent.prototype, "tabs", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:type", Object)
-    ], TabComponent.prototype, "activeIndex", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", Object)
-    ], TabComponent.prototype, "changed", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", Object)
-    ], TabComponent.prototype, "compileCommand", void 0);
-    TabComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'editor-tab',
-            template: __webpack_require__("../../../../../src/app/components/editor-tab/editor-tab.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/components/editor-tab/editor-tab.component.css")]
-        }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _b || Object])
-    ], TabComponent);
     return TabComponent;
-    var _a, _b;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__editor_editor_model__["b" /* EditorConfigModel */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__editor_editor_model__["b" /* EditorConfigModel */]) === "function" && _a || Object)
+], TabComponent.prototype, "config", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", Object)
+], TabComponent.prototype, "tabs", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", Object)
+], TabComponent.prototype, "activeIndex", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
+    __metadata("design:type", Object)
+], TabComponent.prototype, "changed", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
+    __metadata("design:type", Object)
+], TabComponent.prototype, "compileCommand", void 0);
+TabComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'editor-tab',
+        template: __webpack_require__("../../../../../src/app/components/editor-tab/editor-tab.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/editor-tab/editor-tab.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _b || Object])
+], TabComponent);
 
+var _a, _b;
 //# sourceMappingURL=editor-tab.component.js.map
 
 /***/ }),
@@ -1638,7 +1638,7 @@ var TabComponent = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabModel; });
-var TabModel = /** @class */ (function () {
+var TabModel = (function () {
     function TabModel() {
     }
     return TabModel;
@@ -1703,7 +1703,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var EditorComponent = /** @class */ (function () {
+var EditorComponent = (function () {
     function EditorComponent(service, compiler, storage) {
         var _this = this;
         this.service = service;
@@ -1775,23 +1775,23 @@ var EditorComponent = /** @class */ (function () {
     EditorComponent.prototype.onCompileCommand = function () {
         this.compileComponent.postCompile();
     };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_2__compile_compile_component__["a" /* CompileComponent */]),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__compile_compile_component__["a" /* CompileComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__compile_compile_component__["a" /* CompileComponent */]) === "function" && _a || Object)
-    ], EditorComponent.prototype, "compileComponent", void 0);
-    EditorComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'wandbox-editor',
-            template: __webpack_require__("../../../../../src/app/components/editor/editor.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")],
-            providers: [__WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]]
-        }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _d || Object])
-    ], EditorComponent);
     return EditorComponent;
-    var _a, _b, _c, _d;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_2__compile_compile_component__["a" /* CompileComponent */]),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__compile_compile_component__["a" /* CompileComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__compile_compile_component__["a" /* CompileComponent */]) === "function" && _a || Object)
+], EditorComponent.prototype, "compileComponent", void 0);
+EditorComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'wandbox-editor',
+        template: __webpack_require__("../../../../../src/app/components/editor/editor.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")],
+        providers: [__WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _d || Object])
+], EditorComponent);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=editor.component.js.map
 
 /***/ }),
@@ -1808,7 +1808,7 @@ var EditorComponent = /** @class */ (function () {
 * @export
 * @class EditorModel
 */
-var EditorComponentModel = /** @class */ (function () {
+var EditorComponentModel = (function () {
     function EditorComponentModel() {
         this.config = new EditorConfigModel();
         this.tabs = new Array();
@@ -1895,7 +1895,7 @@ var EditorComponentModel = /** @class */ (function () {
     return EditorComponentModel;
 }());
 
-var EditorConfigModel = /** @class */ (function () {
+var EditorConfigModel = (function () {
     function EditorConfigModel() {
         this.keyMap = 'default';
         this.lineNumbers = true;
@@ -1930,7 +1930,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 
 
-var EditorService = /** @class */ (function () {
+var EditorService = (function () {
     function EditorService() {
         this.changeConfigSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["Subject"]();
         this.changeEditorSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["Subject"]();
@@ -1955,11 +1955,11 @@ var EditorService = /** @class */ (function () {
     EditorService.prototype.changeEditorTabNext = function (value) {
         this.changeEditorSubject.next(value);
     };
-    EditorService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])()
-    ], EditorService);
     return EditorService;
 }());
+EditorService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])()
+], EditorService);
 
 //# sourceMappingURL=editor.service.js.map
 
@@ -2006,21 +2006,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var HeaderComponent = /** @class */ (function () {
+var HeaderComponent = (function () {
     function HeaderComponent() {
     }
     HeaderComponent.prototype.ngOnInit = function () {
     };
-    HeaderComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'wandbox-header',
-            template: __webpack_require__("../../../../../src/app/components/header/header.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/components/header/header.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], HeaderComponent);
     return HeaderComponent;
 }());
+HeaderComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'wandbox-header',
+        template: __webpack_require__("../../../../../src/app/components/header/header.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/header/header.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], HeaderComponent);
 
 //# sourceMappingURL=header.component.js.map
 
@@ -2067,21 +2067,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var SponsorsComponent = /** @class */ (function () {
+var SponsorsComponent = (function () {
     function SponsorsComponent() {
     }
     SponsorsComponent.prototype.ngOnInit = function () {
     };
-    SponsorsComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'wandbox-sponsors',
-            template: __webpack_require__("../../../../../src/app/components/sponsors/sponsors.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/components/sponsors/sponsors.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], SponsorsComponent);
     return SponsorsComponent;
 }());
+SponsorsComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'wandbox-sponsors',
+        template: __webpack_require__("../../../../../src/app/components/sponsors/sponsors.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/sponsors/sponsors.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], SponsorsComponent);
 
 //# sourceMappingURL=sponsors.component.js.map
 
@@ -2096,7 +2096,7 @@ var SponsorsComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__ = __webpack_require__("../../../../rxjs/Subject.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Subject__);
 
-var PostEventSource = /** @class */ (function () {
+var PostEventSource = (function () {
     function PostEventSource(targetUrl, timeout) {
         if (timeout === void 0) { timeout = 50000; }
         this.targetUrl = targetUrl;
@@ -2249,6 +2249,7 @@ var EventType;
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
+// The file contents for the current environment will overwrite these during build.
 var environment = {
     baseApiUrl: 'https://wandbox.org/api/',
     baseUrl: 'https://wandbox.org/',
