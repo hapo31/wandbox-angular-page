@@ -313,6 +313,24 @@ var TemplateAPIService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/components/codemirror/wb-codemirror.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "textarea {\n    display: none;\n}\n\n.wandbox-codemirror-container .CodeMirror pre {\n    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', 'Courier New', monospace;\n    font-size: 12px;\n    line-height: 16px;\n}\n\n.wandbox-codemirror-container .CodeMirror {\n    height: auto;\n    margin: 0px;\n    min-height: 300px;\n}\n\n.wandbox-codemirror-container.expand .CodeMirror {\n    height: auto;\n    min-height: 300px;\n}\n\n.wandbox-codemirror-container.expand .CodeMirror-scroll {\n    overflow-y: hidden;\n    overflow-x: auto;\n    min-height: 300px;\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
 /***/ "../../../../../src/app/components/codemirror/wb-codemirror.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -346,13 +364,18 @@ var WandboxCodemirrorComponent = /** @class */ (function () {
         this.compileCommand = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this.codemirror = null;
         // apply change config.
-        service.changeConfig$.subscribe(function (v) {
+        service.changeConfig$
+            .filter(function (v) { return v.name !== 'expand'; })
+            .subscribe(function (v) {
+            _this.config[v.name] = v.value;
             _this.codemirror.setOption(v.name, v.value);
+            _this.codemirror.refresh();
         });
         // set tab data
         service.changeEditorTab$.subscribe(function (v) {
             _this.value = v;
             _this.codemirror.setValue(v);
+            _this.codemirror.refresh();
         });
     }
     WandboxCodemirrorComponent.prototype.ngAfterViewInit = function () {
@@ -409,6 +432,7 @@ var WandboxCodemirrorComponent = /** @class */ (function () {
                 console.log('hogehoge');
             }
         });
+        this.codemirror.refresh();
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
@@ -441,8 +465,8 @@ var WandboxCodemirrorComponent = /** @class */ (function () {
     WandboxCodemirrorComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'wandbox-codemirror',
-            styles: ["\n        textarea {\n            display: none;\n        }\n    "],
-            template: "\n        <textarea #host></textarea>\n  "
+            styles: [__webpack_require__("../../../../../src/app/components/codemirror/wb-codemirror.component.css")],
+            template: "\n        <div class=\"wandbox-codemirror-container\" [class.expand]=\"config.expand\">\n            <textarea #host></textarea>\n        </div>\n  "
         }),
         __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__editor_editor_service__["a" /* EditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__editor_editor_service__["a" /* EditorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _c || Object])
     ], WandboxCodemirrorComponent);
@@ -1040,7 +1064,7 @@ var CompilerComponent = /** @class */ (function () {
             _this.model.languages = Object.keys(languageDic)
                 .map(function (key) { return languageDic[key]; });
             _this.model.fetched = true;
-            if (!_this.storage.hasValue('language')) {
+            if (_this.storage.hasValue('language')) {
                 var language_1 = _this.storage.getValue('language');
                 var langIndex = _this.model.languages.findIndex(function (v) { return v.languageName === language_1; });
                 if (langIndex === -1) {
@@ -1112,7 +1136,7 @@ var CompilerComponent = /** @class */ (function () {
             this.selectCompiler(0);
         }
         this.service.selectedLanguageNext(this.selectedLanguage);
-        console.log('active', this.model.selectedLangIndex);
+        console.log('active', this.selectedLanguage);
     };
     /**
      * Activate selected compiler.
@@ -1397,7 +1421,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".wandbox-editor-name-tab.first {\n    padding: 6px 10px;\n}\n\n.wandbox-renamable {\n    height: 20px;\n    width: 150px;\n}", ""]);
+exports.push([module.i, ".wandbox-editor-name-tab.first {\n    padding: 6px 10px;\n}\n\n.wandbox-renamable {\n    height: 20px;\n    width: 150px;\n}\n\n#wandbox-editor-add-tab {\n    border: none;\n}", ""]);
 
 // exports
 
@@ -1410,7 +1434,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/editor-tab/editor-tab.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wandbox-editor\">\n    <ul id=\"wandbox-editor-header\" class=\"nav nav-tabs\" role=\"tablist\">\n        <li *ngFor=\"let tab of tabs; let i=index;\" [class.active]=\"tab.isActive\" (click)=\"tabClick(i)\">\n            <a class=\"wandbox-editor-name-tab\" [class.first]=\"i === 0\" role=\"tab\" data-toggle=\"tab\">\n                <i class=\"glyphicon glyphicon-file\"></i>\n                <span *ngIf=\"!tab.editing\" class=\"wandbox-renamable\" (dblclick)=\"editTab(i, fileNameInput)\">{{tab.fileName}}</span>\n                <input #fileNameInput class=\"wandbox-renamable\" (blur)=\"tab.editing = false;\" (keypress)=\"editInputKeyPress(i, $event)\" [hidden]=\"!tab.editing\"\n                    [(ngModel)]=\"tab.fileName\" />\n                <button *ngIf=\"i !== 0\" class=\"glyphicon glyphicon-remove close\" (click)=\"removeTab(i)\"></button>\n            </a>\n        </li>\n        <li>\n            <a id=\"wandbox-editor-add-tab\" class=\"btn btn-default\" (click)=\"addTab()\">\n                <i class=\"glyphicon glyphicon-plus\"></i>\n            </a>\n        </li>\n    </ul>\n    <div class=\"clearfix\"></div>\n    <div id=\"wandbox-editor-content\" class=\"tab-content\">\n        <wandbox-codemirror [config]=\"config\" (compileCommand)=\"onCompileCommand()\" (change)=\"tabChanged($event)\" [value]=\"tabs[activeIndex].editorContent\">\n\n        </wandbox-codemirror>\n    </div>\n</div>\n"
+module.exports = "<div class=\"wandbox-editor\">\n    <ul id=\"wandbox-editor-header\" class=\"nav nav-tabs\" role=\"tablist\">\n        <li *ngFor=\"let tab of tabs; let i=index;\" [class.active]=\"tab.isActive\" (click)=\"tabClick(i)\">\n            <a class=\"wandbox-editor-name-tab\" [class.first]=\"i === 0\" role=\"tab\" data-toggle=\"tab\">\n                <i class=\"glyphicon glyphicon-file\"></i>\n                <span *ngIf=\"!tab.editing\" class=\"wandbox-renamable\" (dblclick)=\"editTab(i, fileNameInput)\">{{tab.fileName}}</span>\n                <input #fileNameInput class=\"wandbox-renamable\" (blur)=\"tab.editing = false;\" (keypress)=\"editInputKeyPress(i, $event)\" [hidden]=\"!tab.editing\" [(ngModel)]=\"tab.fileName\" />\n                <button *ngIf=\"i !== 0\" class=\"glyphicon glyphicon-remove close\" (click)=\"removeTab(i)\"></button>\n            </a>\n        </li>\n        <li>\n            <a id=\"wandbox-editor-add-tab\" class=\"btn btn-default\" (click)=\"addTab()\">\n                <i class=\"glyphicon glyphicon-plus\"></i>\n            </a>\n        </li>\n    </ul>\n    <div class=\"clearfix\"></div>\n    <div id=\"wandbox-editor-content\" class=\"tab-content\">\n        <wandbox-codemirror [config]=\"config\" (compileCommand)=\"onCompileCommand()\" (change)=\"tabChanged($event)\" [value]=\"tabs[activeIndex].editorContent\">\n        </wandbox-codemirror>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -1645,7 +1669,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/editor/editor.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n    <div class=\"col-md-10\">\n        <editor-tab (compileCommand)=\"onCompileCommand()\" (changed)=\"tabChanged($event)\" [tabs]=\"model.tabs\" [config]=\"model.config\"\n            [activeIndex]=\"model.activeTabIndex\"></editor-tab>\n    </div>\n    <div class=\"col-md-2\" id=\"wandbox-editor-settings\">\n        <label>Editor settings:</label>\n        <div class=\"checkbox\">\n            <select class=\"form-control wandbox-select\" [(ngModel)]=\"model.keyMap\" (change)=\"changeConfig('keyMap', model.keyMap)\">\n                <option value=\"default\" selected=\"\">editor: default</option>\n                <option value=\"vim\">editor: Vim</option>\n                <option value=\"emacs\">editor: Emacs</option>\n            </select>\n        </div>\n        <div class=\"checkbox\">\n            <select class=\"wandbox-spaces-or-tab form-control\" [(ngModel)]=\"model.tabSize\" (change)=\"changeConfig('tabSize', model.tabSize)\">\n                <option value=\"2\">tab: 2-spaces</option>\n                <option value=\"4\" selected=\"\">tab: 4-spaces</option>\n                <option value=\"8\">tab: 8-spaces</option>\n            </select>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"indent-with-tabs\" type=\"checkbox\" [(ngModel)]=\"model.indentWithTabs\" (change)=\"changeConfig('indentWithTabs', model.indentWithTabs)\"\n                    checked=\"\"> Indent with Tabs\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"smart-indent\" type=\"checkbox\" [(ngModel)]=\"model.smartIndent\" (change)=\"changeConfig('smartIndent', model.smartIndent)\"\n                    checked=\"\"> Smart Indent\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"expand-editor\" type=\"checkbox\" value=\"expand-editor\" [(ngModel)]=\"model.expand\"> Expand\n            </label>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-12\">\n        <p id=\"compile_command\">\n            <code *ngIf=\"model.selectedLanguage != null && model.selectedLanguage.selectedCompiler != null\">\n                $ {{model.selectedLanguage.selectedCompiler.compileCommand}} {{model.selectedLanguage.selectedCompiler.displayFlags}}\n            </code>\n        </p>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-10\">\n        <div class=\"panel-group\" role=\"tablist\" id=\"wandbox-stdin-accordion\" aria-multiselectable=\"true\">\n            <div class=\"panel panel-default\">\n                <a id=\"wandbox-stdin-button\" data-toggle=\"collapse\" data-parent=\"#wandbox-stdin-accordion\" href=\"#wandbox-stdin-body\" aria-expanded=\"true\">\n                    Stdin\n                </a>\n                <div id=\"wandbox-stdin-body\" class=\"panel-collapse collapse\">\n                    <textarea class=\"form-control\" [(ngModel)]=\"model.stdin\"></textarea>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<wandbox-compile [tabs]=\"model.tabs\" [stdin]=\"model.stdin\" [selectedLanguage]=\"model.selectedLanguage\"></wandbox-compile>\n"
+module.exports = "<div class=\"row\">\n    <div class=\"col-md-10\">\n        <editor-tab (compileCommand)=\"onCompileCommand()\" (changed)=\"tabChanged($event)\" [tabs]=\"model.tabs\" [config]=\"model.config\" [activeIndex]=\"model.activeTabIndex\"></editor-tab>\n    </div>\n    <div class=\"col-md-2\" id=\"wandbox-editor-settings\">\n        <label>Editor settings:</label>\n        <div class=\"checkbox\">\n            <select class=\"form-control wandbox-select\" [(ngModel)]=\"model.keyMap\" (change)=\"changeConfig('keyMap')\">\n                <option value=\"default\" selected=\"\">editor: default</option>\n                <option value=\"vim\">editor: Vim</option>\n                <option value=\"emacs\">editor: Emacs</option>\n            </select>\n        </div>\n        <div class=\"checkbox\">\n            <select class=\"wandbox-spaces-or-tab form-control\" [(ngModel)]=\"model.tabSize\" (change)=\"changeConfig('tabSize')\">\n                <option value=\"2\">tab: 2-spaces</option>\n                <option value=\"4\" selected=\"\">tab: 4-spaces</option>\n                <option value=\"8\">tab: 8-spaces</option>\n            </select>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"indent-with-tabs\" type=\"checkbox\" [(ngModel)]=\"model.indentWithTabs\" (change)=\"changeConfig('indentWithTabs')\"\n                    checked=\"\"> Indent with Tabs\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"smart-indent\" type=\"checkbox\" [(ngModel)]=\"model.smartIndent\" (change)=\"changeConfig('smartIndent')\"\n                    checked=\"\"> Smart Indent\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"expand-editor\" type=\"checkbox\" value=\"expand-editor\" [(ngModel)]=\"model.expand\" (change)=\"changeConfig('expand')\"> Expand\n            </label>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-12\">\n        <p id=\"compile_command\">\n            <code *ngIf=\"model.selectedLanguage != null && model.selectedLanguage.selectedCompiler != null\">\n                $ {{model.selectedLanguage.selectedCompiler.compileCommand}} {{model.selectedLanguage.selectedCompiler.displayFlags}}\n            </code>\n        </p>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-10\">\n        <div class=\"panel-group\" role=\"tablist\" id=\"wandbox-stdin-accordion\" aria-multiselectable=\"true\">\n            <div class=\"panel panel-default\">\n                <a id=\"wandbox-stdin-button\" data-toggle=\"collapse\" data-parent=\"#wandbox-stdin-accordion\" href=\"#wandbox-stdin-body\" aria-expanded=\"true\">\n                    Stdin\n                </a>\n                <div id=\"wandbox-stdin-body\" class=\"panel-collapse collapse\">\n                    <textarea class=\"form-control\" [(ngModel)]=\"model.stdin\"></textarea>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<wandbox-compile [tabs]=\"model.tabs\" [stdin]=\"model.stdin\" [selectedLanguage]=\"model.selectedLanguage\"></wandbox-compile>"
 
 /***/ }),
 
@@ -1691,7 +1715,8 @@ var EditorComponent = /** @class */ (function () {
             var mimeStr = Object(__WEBPACK_IMPORTED_MODULE_7__common_language_mime_util__["a" /* mime */])(language.languageName);
             _this.model.mode = mimeStr;
             _this.model.selectedLanguage = language;
-            _this.changeConfig('mode', mimeStr);
+            _this.model.config.mode = mimeStr;
+            _this.changeConfig('mode');
         });
         // Detection load template from compiler component.
         this.compiler.loadTemplate$.subscribe(function (info) {
@@ -1716,21 +1741,24 @@ var EditorComponent = /** @class */ (function () {
         }
         if (this.storage.hasValue('editorConfig')) {
             this.model.config = this.storage.getValue('editorConfig');
+            // JSON.stringfy() converts Infinity to null
+            if (this.model.config.viewportMargin === null) {
+                this.model.config.viewportMargin = Infinity;
+            }
         }
     };
     /**
      * Detection changed config.
      *
      * @param {string} configName
-     * @param {(string | number)} value
      * @memberof EditorComponent
      */
-    EditorComponent.prototype.changeConfig = function (configName, value) {
+    EditorComponent.prototype.changeConfig = function (configName) {
         this.storage.setValue('editorConfig', this.model.config);
         // send config data to codemirror component.
         this.service.changeConfigNext$({
             name: configName,
-            value: value
+            value: this.model.config[configName]
         });
     };
     /**
@@ -1877,6 +1905,7 @@ var EditorConfigModel = /** @class */ (function () {
         this.tabSize = 4;
         this.indentUnit = 4;
         this.mode = 'text/x-csrc';
+        this.viewportMargin = Infinity;
     }
     return EditorConfigModel;
 }());
