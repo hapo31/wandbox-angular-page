@@ -49,26 +49,38 @@ module.exports = "<div class=\"container-fluid\">\n    <wandbox-header></wandbox
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_common_run_compile_service__ = __webpack_require__("../../../../../src/app/components/common/run-compile.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_api_permlink_service__ = __webpack_require__("../../../../../src/app/components/api/permlink.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__ = __webpack_require__("../../../../rxjs/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
+    function AppComponent(permlink) {
+        this.permlink = permlink;
+        this.test = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"]();
     }
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-            selector: 'app-root',
+            selector: 'app-wandbox',
             template: __webpack_require__("../../../../../src/app/app.component.html"),
             styles: [__webpack_require__("../../../../../src/app/app.component.css")],
             providers: [__WEBPACK_IMPORTED_MODULE_1__components_common_run_compile_service__["a" /* RunCompileService */]]
-        })
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__components_api_permlink_service__["a" /* PermlinkService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__components_api_permlink_service__["a" /* PermlinkService */]) === "function" && _a || Object])
     ], AppComponent);
     return AppComponent;
+    var _a;
 }());
 
 //# sourceMappingURL=app.component.js.map
@@ -87,25 +99,29 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_codemirror_wb_codemirror_component__ = __webpack_require__("../../../../../src/app/components/codemirror/wb-codemirror.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_editor_editor_component__ = __webpack_require__("../../../../../src/app/components/editor/editor.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_header_header_component__ = __webpack_require__("../../../../../src/app/components/header/header.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_sponsors_sponsors_component__ = __webpack_require__("../../../../../src/app/components/sponsors/sponsors.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_compiler_compiler_component__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_compile_compile_component__ = __webpack_require__("../../../../../src/app/components/compile/compile.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_editor_tab_editor_tab_component__ = __webpack_require__("../../../../../src/app/components/editor-tab/editor-tab.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_compiler_compiler_service__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_api_compiler_list_service__ = __webpack_require__("../../../../../src/app/components/api/compiler-list.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_api_template_service__ = __webpack_require__("../../../../../src/app/components/api/template.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_api_compile_service__ = __webpack_require__("../../../../../src/app/components/api/compile.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_common_local_storage_service__ = __webpack_require__("../../../../../src/app/components/common/local-storage.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_compile_result_tab_compile_result_tab_component__ = __webpack_require__("../../../../../src/app/components/compile-result-tab/compile-result-tab.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__root_component__ = __webpack_require__("../../../../../src/app/root.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_codemirror_wb_codemirror_component__ = __webpack_require__("../../../../../src/app/components/codemirror/wb-codemirror.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_editor_editor_component__ = __webpack_require__("../../../../../src/app/components/editor/editor.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_header_header_component__ = __webpack_require__("../../../../../src/app/components/header/header.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_sponsors_sponsors_component__ = __webpack_require__("../../../../../src/app/components/sponsors/sponsors.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_compiler_compiler_component__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_compile_compile_component__ = __webpack_require__("../../../../../src/app/components/compile/compile.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_editor_tab_editor_tab_component__ = __webpack_require__("../../../../../src/app/components/editor-tab/editor-tab.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_compiler_compiler_service__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_api_compiler_list_service__ = __webpack_require__("../../../../../src/app/components/api/compiler-list.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_api_template_service__ = __webpack_require__("../../../../../src/app/components/api/template.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_api_compile_service__ = __webpack_require__("../../../../../src/app/components/api/compile.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_common_local_storage_service__ = __webpack_require__("../../../../../src/app/components/common/local-storage.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_api_permlink_service__ = __webpack_require__("../../../../../src/app/components/api/permlink.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_compile_result_tab_compile_result_tab_component__ = __webpack_require__("../../../../../src/app/components/compile-result-tab/compile-result-tab.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -131,36 +147,39 @@ var AppModule = /** @class */ (function () {
     }
     AppModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["M" /* NgModule */])({
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_7__root_component__["a" /* RouterRootComponent */]],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_5__angular_common_http__["b" /* HttpClientModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* RouterModule */].forRoot([
+                // configuration app routing.
+                __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* RouterModule */].forRoot([
                     { path: 'permlink/:id', component: __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */] },
                     { path: '', component: __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */], pathMatch: 'full' },
                 ]),
             ],
             declarations: [
+                __WEBPACK_IMPORTED_MODULE_7__root_component__["a" /* RouterRootComponent */],
                 __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_7__components_codemirror_wb_codemirror_component__["a" /* WandboxCodemirrorComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components_editor_editor_component__["a" /* EditorComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__components_header_header_component__["a" /* HeaderComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components_sponsors_sponsors_component__["a" /* SponsorsComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__components_compiler_compiler_component__["a" /* CompilerComponent */],
-                __WEBPACK_IMPORTED_MODULE_12__components_compile_compile_component__["a" /* CompileComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__components_editor_tab_editor_tab_component__["a" /* TabComponent */],
-                __WEBPACK_IMPORTED_MODULE_19__components_compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]
+                __WEBPACK_IMPORTED_MODULE_8__components_codemirror_wb_codemirror_component__["a" /* WandboxCodemirrorComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__components_editor_editor_component__["a" /* EditorComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__components_header_header_component__["a" /* HeaderComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components_sponsors_sponsors_component__["a" /* SponsorsComponent */],
+                __WEBPACK_IMPORTED_MODULE_12__components_compiler_compiler_component__["a" /* CompilerComponent */],
+                __WEBPACK_IMPORTED_MODULE_13__components_compile_compile_component__["a" /* CompileComponent */],
+                __WEBPACK_IMPORTED_MODULE_14__components_editor_tab_editor_tab_component__["a" /* TabComponent */],
+                __WEBPACK_IMPORTED_MODULE_21__components_compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]
             ],
             exports: [],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_16__components_api_template_service__["a" /* TemplateAPIService */],
-                __WEBPACK_IMPORTED_MODULE_15__components_api_compiler_list_service__["a" /* CompilerListAPIService */],
-                __WEBPACK_IMPORTED_MODULE_14__components_compiler_compiler_service__["a" /* CompilerService */],
-                __WEBPACK_IMPORTED_MODULE_17__components_api_compile_service__["a" /* PostCompileService */],
-                __WEBPACK_IMPORTED_MODULE_18__components_common_local_storage_service__["a" /* LocalStorageService */],
+                __WEBPACK_IMPORTED_MODULE_17__components_api_template_service__["a" /* TemplateAPIService */],
+                __WEBPACK_IMPORTED_MODULE_16__components_api_compiler_list_service__["a" /* CompilerListAPIService */],
+                __WEBPACK_IMPORTED_MODULE_15__components_compiler_compiler_service__["a" /* CompilerService */],
+                __WEBPACK_IMPORTED_MODULE_18__components_api_compile_service__["a" /* PostCompileService */],
+                __WEBPACK_IMPORTED_MODULE_19__components_common_local_storage_service__["a" /* LocalStorageService */],
+                __WEBPACK_IMPORTED_MODULE_20__components_api_permlink_service__["a" /* PermlinkService */],
                 [{ provide: __WEBPACK_IMPORTED_MODULE_4__angular_common__["a" /* APP_BASE_HREF */], useValue: '' }],
             ],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */]]
         })
     ], AppModule);
     return AppModule;
@@ -260,6 +279,62 @@ var CompilerListAPIService = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=compiler-list.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/api/permlink.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PermlinkService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__ = __webpack_require__("../../../../rxjs/Subject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var PermlinkService = /** @class */ (function () {
+    function PermlinkService(http, route) {
+        var _this = this;
+        this.http = http;
+        this.route = route;
+        this.subject = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__["Subject"]();
+        this.route.params
+            .do(function (v) { return console.log('[PermlinkService]', v); })
+            .filter(function (linkId) { return linkId && linkId.id != null; })
+            .flatMap(function (linkId) {
+            return _this.http.get(__WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].baseApiUrl + 'permlink/' + linkId);
+        })
+            .subscribe(function (res) {
+            _this.subject.next(res);
+        });
+    }
+    PermlinkService.prototype.changePermlink$ = function () {
+        return this.subject.asObservable();
+    };
+    PermlinkService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object])
+    ], PermlinkService);
+    return PermlinkService;
+    var _a, _b;
+}());
+
+//# sourceMappingURL=permlink.service.js.map
 
 /***/ }),
 
@@ -541,7 +616,6 @@ var LocalStorageService = /** @class */ (function () {
         return JSON.parse(this.storage.getItem(key));
     };
     LocalStorageService.prototype.setValue = function (key, value) {
-        console.log('storage store', key, value);
         this.storage.setItem(key, JSON.stringify(value));
     };
     LocalStorageService.prototype.removeValue = function (key) {
@@ -1158,7 +1232,6 @@ var CompilerComponent = /** @class */ (function () {
             this.selectCompiler(0);
         }
         this.service.selectedLanguageNext(this.selectedLanguage);
-        console.log('active', this.selectedLanguage);
     };
     /**
      * Activate selected compiler.
@@ -1186,7 +1259,6 @@ var CompilerComponent = /** @class */ (function () {
     CompilerComponent.prototype.changeOption = function (index, item) {
         var keyName = this.generateCompileOptionStorageKey(this.selectedLanguage);
         this.storage.setValue(keyName, this.selectedLanguage.selectedCompiler.options);
-        console.log('changed', index, item);
     };
     /**
      * Load template code from API for active language.
@@ -1196,7 +1268,6 @@ var CompilerComponent = /** @class */ (function () {
      */
     CompilerComponent.prototype.clickLoadTemplate = function (templateName) {
         this.service.loadTemplateNext(templateName);
-        console.log('template', templateName);
     };
     CompilerComponent.prototype.generateCompileOptionStorageKey = function (language) {
         return "compilerOptions-" + language.languageName + "-" + language.selectedCompiler.displayName + "-" + language.selectedCompiler.version;
@@ -1707,7 +1778,8 @@ module.exports = "<div class=\"row\">\n    <div class=\"col-md-10\">\n        <e
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__editor_service__ = __webpack_require__("../../../../../src/app/components/editor/editor.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__ = __webpack_require__("../../../../../src/app/components/common/local-storage.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_language_mime_util__ = __webpack_require__("../../../../../src/app/components/common/language-mime.util.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_language_mime_util__ = __webpack_require__("../../../../../src/app/components/common/language-mime.util.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1725,16 +1797,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var EditorComponent = /** @class */ (function () {
-    function EditorComponent(service, compiler, storage) {
+    function EditorComponent(service, compiler, storage, route) {
         var _this = this;
         this.service = service;
         this.compiler = compiler;
         this.storage = storage;
+        this.route = route;
         this.model = new __WEBPACK_IMPORTED_MODULE_1__editor_model__["a" /* EditorComponentModel */]();
         // Detection changed mime event from compiler changing.
         this.compiler.selectedLanguage$.subscribe(function (language) {
-            var mimeStr = Object(__WEBPACK_IMPORTED_MODULE_7__common_language_mime_util__["a" /* mime */])(language.languageName);
+            var mimeStr = Object(__WEBPACK_IMPORTED_MODULE_8__common_language_mime_util__["a" /* mime */])(language.languageName);
             _this.model.mode = mimeStr;
             _this.model.selectedLanguage = language;
             _this.model.config.mode = mimeStr;
@@ -1748,6 +1822,7 @@ var EditorComponent = /** @class */ (function () {
         });
     }
     EditorComponent.prototype.ngOnInit = function () {
+        console.log('param', this.route.snapshot.params);
         // Load tab data from local storage.
         if (this.storage.hasValue('tabs')) {
             this.model.tabs = this.storage.getValue('tabs');
@@ -1808,10 +1883,10 @@ var EditorComponent = /** @class */ (function () {
             styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")],
             providers: [__WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]]
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_7__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__angular_router__["a" /* ActivatedRoute */]) === "function" && _e || Object])
     ], EditorComponent);
     return EditorComponent;
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=editor.component.js.map
@@ -2106,6 +2181,40 @@ var SponsorsComponent = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=sponsors.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/root.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RouterRootComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var RouterRootComponent = /** @class */ (function () {
+    function RouterRootComponent() {
+    }
+    RouterRootComponent.prototype.ngOnInit = function () { };
+    RouterRootComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+            selector: 'app-router-root',
+            template: '<router-outlet></router-outlet>'
+        }),
+        __metadata("design:paramtypes", [])
+    ], RouterRootComponent);
+    return RouterRootComponent;
+}());
+
+//# sourceMappingURL=root.component.js.map
 
 /***/ }),
 
