@@ -49,9 +49,6 @@ module.exports = "<div class=\"container-fluid\">\n    <wandbox-header></wandbox
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_common_run_compile_service__ = __webpack_require__("../../../../../src/app/components/common/run-compile.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_api_permlink_service__ = __webpack_require__("../../../../../src/app/components/api/permlink.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__ = __webpack_require__("../../../../rxjs/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -63,12 +60,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
-
 var AppComponent = /** @class */ (function () {
-    function AppComponent(permlink) {
-        this.permlink = permlink;
-        this.test = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"]();
+    function AppComponent() {
     }
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
@@ -77,10 +70,9 @@ var AppComponent = /** @class */ (function () {
             styles: [__webpack_require__("../../../../../src/app/app.component.css")],
             providers: [__WEBPACK_IMPORTED_MODULE_1__components_common_run_compile_service__["a" /* RunCompileService */]]
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__components_api_permlink_service__["a" /* PermlinkService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__components_api_permlink_service__["a" /* PermlinkService */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [])
     ], AppComponent);
     return AppComponent;
-    var _a;
 }());
 
 //# sourceMappingURL=app.component.js.map
@@ -309,23 +301,62 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var PermlinkService = /** @class */ (function () {
     function PermlinkService(http, route) {
-        var _this = this;
         this.http = http;
         this.route = route;
+        this._fetching = false;
+        this._resultCache = null;
+        this._fetchObserver = null;
         this.subject = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__["Subject"]();
-        this.route.params
-            .do(function (v) { return console.log('[PermlinkService]', v); })
-            .filter(function (linkId) { return linkId && linkId.id != null; })
-            .flatMap(function (linkId) {
-            return _this.http.get(__WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].baseApiUrl + 'permlink/' + linkId);
-        })
-            .subscribe(function (res) {
-            _this.subject.next(res);
-        });
+        var match = location.href.match(/.*\/permlink\/(.*)\/?/);
+        if (match && match.length) {
+            this._linkId = match[1];
+        }
+        else {
+            this._linkId = '';
+        }
     }
-    PermlinkService.prototype.changePermlink$ = function () {
-        return this.subject.asObservable();
-    };
+    Object.defineProperty(PermlinkService.prototype, "requested", {
+        get: function () {
+            return this._linkId.length > 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(PermlinkService.prototype, "checkPermlink$", {
+        /**
+         * Check permlink id in url.
+         *
+         * @readonly
+         * @type {Observable<PermlinkResponse>}
+         * @memberof PermlinkService
+         */
+        get: function () {
+            var _this = this;
+            if (!this._fetching && this.requested) {
+                if (this._resultCache != null) {
+                    console.log('[PermlinkService]', 'cache subscribe');
+                    this.subject.next(this._resultCache);
+                }
+                else {
+                    this._fetching = true;
+                    console.log('[PermlinkService]', 'fetch permlink');
+                    this.http.get(__WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].baseApiUrl + 'permlink/' + this._linkId)
+                        .subscribe(function (res) {
+                        _this._resultCache = res;
+                        _this._fetching = false;
+                        console.log('[PermlinkService]', 'subscribe permlink');
+                        _this.subject.next(res);
+                        _this.subject.complete();
+                    }, function (err) {
+                        _this.subject.error(err);
+                    });
+                }
+            }
+            return this.subject.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
     PermlinkService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object])
@@ -362,7 +393,7 @@ var TemplateAPIService = /** @class */ (function () {
     function TemplateAPIService(http) {
         this.http = http;
     }
-    TemplateAPIService.prototype.fetch = function (templateName) {
+    TemplateAPIService.prototype.fetch$ = function (templateName) {
         return this.http.get(__WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].baseApiUrl + 'template/' + templateName);
     };
     TemplateAPIService = __decorate([
@@ -698,7 +729,8 @@ var RunCompileService = /** @class */ (function () {
      */
     RunCompileService.prototype.createRequestParams = function (stdin, tabs, language, save) {
         var code = tabs[0].editorContent;
-        var codes = tabs.length > 1 ? tabs.map(function (v) { return ({
+        var codes = tabs.length > 1 ? tabs.filter(function (v, i) { return i !== 0; }) // split of tabs head and later.
+            .map(function (v) { return ({
             code: v.editorContent,
             file: v.fileName
         }); }) : [];
@@ -811,7 +843,7 @@ var CompileResultTabComponent = /** @class */ (function () {
     };
     CompileResultTabComponent.prototype.clickRemoveTab = function (index) {
         this.removeTab.emit(index);
-        if (this.results.length <= this.activeIndex) {
+        if (this.activeIndex >= this.results.length) {
             this.activationResultTab(this.results.length - 1);
         }
         console.log(this.activeIndex);
@@ -891,9 +923,11 @@ module.exports = "<div class=\"row\">\n    <div class=\"col-md-4\">\n        <a 
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CompileComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__ = __webpack_require__("../../../../../src/app/components/common/run-compile.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compile_model__ = __webpack_require__("../../../../../src/app/components/compile/compile.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__compiler_compiler_model__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__ = __webpack_require__("../../../../../src/app/components/compile-result-tab/compile-result-tab.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api_permlink_service__ = __webpack_require__("../../../../../src/app/components/api/permlink.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__compile_model__ = __webpack_require__("../../../../../src/app/components/compile/compile.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__editor_tab_editor_tab_model__ = __webpack_require__("../../../../../src/app/components/editor-tab/editor-tab.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_model__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__compile_result_tab_compile_result_tab_component__ = __webpack_require__("../../../../../src/app/components/compile-result-tab/compile-result-tab.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -908,11 +942,49 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var CompileComponent = /** @class */ (function () {
-    function CompileComponent(runCompile) {
+    function CompileComponent(runCompile, permlink) {
+        var _this = this;
         this.runCompile = runCompile;
+        this.permlink = permlink;
         this.compile = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.model = new __WEBPACK_IMPORTED_MODULE_2__compile_model__["a" /* CompileComponentModel */]();
+        this.model = new __WEBPACK_IMPORTED_MODULE_3__compile_model__["a" /* CompileComponentModel */]();
+        if (this.permlink.requested) {
+            this.permlink.checkPermlink$.subscribe(function (res) {
+                var result = res.result, parameter = res.parameter;
+                var permlinkTab = new __WEBPACK_IMPORTED_MODULE_3__compile_model__["b" /* CompileResultModel */]();
+                permlinkTab.tabName = 'permlink';
+                permlinkTab.programMessage = result.program_message;
+                permlinkTab.programOutout = result.program_output;
+                permlinkTab.compilerErrorMessage = result.compiler_error;
+                permlinkTab.programErrorMessage = result.program_error;
+                permlinkTab.signalMessage = result.signal;
+                permlinkTab.status = +(result.status !== undefined ? result.status : -1);
+                permlinkTab.stdin = parameter.stdin;
+                permlinkTab.languageInfo = new __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_model__["b" /* LanguageModel */]();
+                permlinkTab.languageInfo.languageName = parameter['compiler-info'].language;
+                permlinkTab.languageInfo.addCompiler(parameter['compiler-info']);
+                permlinkTab.tabs = [];
+                var sourceTab = new __WEBPACK_IMPORTED_MODULE_4__editor_tab_editor_tab_model__["a" /* TabModel */]();
+                sourceTab.fileName = '';
+                sourceTab.editorContent = parameter.code;
+                permlinkTab.tabs.push(sourceTab);
+                if (parameter.codes && parameter.codes.length > 0) {
+                    for (var _i = 0, _a = parameter.codes; _i < _a.length; _i++) {
+                        var code = _a[_i];
+                        var tab = new __WEBPACK_IMPORTED_MODULE_4__editor_tab_editor_tab_model__["a" /* TabModel */]();
+                        tab.fileName = code.file;
+                        tab.editorContent = code.code;
+                        permlinkTab.tabs.push(tab);
+                    }
+                }
+                // push to head
+                _this.model.compileResults.splice(0, 0, permlinkTab);
+                _this.model.activeResultIndex = 0;
+            });
+        }
     }
     /**
      * Handle compile button.
@@ -925,7 +997,7 @@ var CompileComponent = /** @class */ (function () {
             return;
         }
         this.model.compiling = true;
-        var result = new __WEBPACK_IMPORTED_MODULE_2__compile_model__["b" /* CompileResultModel */]();
+        var result = new __WEBPACK_IMPORTED_MODULE_3__compile_model__["b" /* CompileResultModel */]();
         result.tabName = (this.model.compileCount + 1).toString();
         this.model.compileCount++;
         // push to head
@@ -1002,11 +1074,11 @@ var CompileComponent = /** @class */ (function () {
     ], CompileComponent.prototype, "stdin", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__compiler_compiler_model__["b" /* LanguageModel */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__compiler_compiler_model__["b" /* LanguageModel */]) === "function" && _a || Object)
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_model__["b" /* LanguageModel */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_model__["b" /* LanguageModel */]) === "function" && _a || Object)
     ], CompileComponent.prototype, "selectedLanguage", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_16" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]),
-        __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]) === "function" && _b || Object)
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_16" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_6__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]),
+        __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_6__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__compile_result_tab_compile_result_tab_component__["a" /* CompileResultTabComponent */]) === "function" && _b || Object)
     ], CompileComponent.prototype, "resultTabComponent", void 0);
     CompileComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
@@ -1014,10 +1086,10 @@ var CompileComponent = /** @class */ (function () {
             template: __webpack_require__("../../../../../src/app/components/compile/compile.component.html"),
             styles: [__webpack_require__("../../../../../src/app/components/compile/compile.component.css")],
         }),
-        __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__common_run_compile_service__["a" /* RunCompileService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__api_permlink_service__["a" /* PermlinkService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__api_permlink_service__["a" /* PermlinkService */]) === "function" && _d || Object])
     ], CompileComponent);
     return CompileComponent;
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=compile.component.js.map
@@ -1126,7 +1198,8 @@ module.exports = "<div class=\"row\" *ngIf=\"model.fetched\">\n    <div class=\"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__compiler_model__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compiler_service__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_local_storage_service__ = __webpack_require__("../../../../../src/app/components/common/local-storage.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__api_permlink_service__ = __webpack_require__("../../../../../src/app/components/api/permlink.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1141,13 +1214,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var CompilerComponent = /** @class */ (function () {
-    function CompilerComponent(service, storage) {
+    function CompilerComponent(service, storage, permlink) {
         var _this = this;
         this.service = service;
         this.storage = storage;
+        this.permlink = permlink;
         this.model = new __WEBPACK_IMPORTED_MODULE_1__compiler_model__["a" /* CompilerComponentModel */]();
-        this.service.fetchCompilerList$().subscribe(function (compilerList) {
+        this.service.fetchCompilerList$.subscribe(function (compilerList) {
             var languageDic = {};
             for (var i = 0; i < compilerList.length; ++i) {
                 var languageName = compilerList[i].language;
@@ -1160,7 +1235,27 @@ var CompilerComponent = /** @class */ (function () {
             _this.model.languages = Object.keys(languageDic)
                 .map(function (key) { return languageDic[key]; });
             _this.model.fetched = true;
-            if (_this.storage.hasValue('language')) {
+            if (_this.permlink.requested) {
+                _this.permlink.checkPermlink$.subscribe(function (res) {
+                    var parameter = res.parameter, result = res.result;
+                    var compilerInfo = parameter['compiler-info'];
+                    var langIndex = _this.model.languages.findIndex(function (v) { return v.languageName === compilerInfo.language; });
+                    if (langIndex === -1) {
+                        // why arrive code?
+                        console.error('not found language.', compilerInfo.language);
+                        langIndex = 0;
+                    }
+                    var compilerIndex = _this.model.languages[langIndex].compilers
+                        .findIndex(function (v) { return v.name === parameter.compiler; });
+                    if (compilerIndex === -1) {
+                        // why arrive code?
+                        console.error('not found compiler.', parameter.compiler);
+                        compilerIndex = 0;
+                    }
+                    _this.selectLanguage(langIndex, compilerIndex);
+                });
+            }
+            else if (_this.storage.hasValue('language')) {
                 var language_1 = _this.storage.getValue('language');
                 var langIndex = _this.model.languages.findIndex(function (v) { return v.languageName === language_1; });
                 if (langIndex === -1) {
@@ -1171,7 +1266,7 @@ var CompilerComponent = /** @class */ (function () {
             }
             else {
                 // get default compiler.
-                var defaultCompiler_1 = __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].DEFAULT_COMPILER;
+                var defaultCompiler_1 = __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].DEFAULT_COMPILER;
                 (function () {
                     for (var _i = 0, _a = _this.model.languages.map(function (lang, index) { return ({ lang: lang, index: index }); }); _i < _a.length; _i++) {
                         var l = _a[_i];
@@ -1278,10 +1373,10 @@ var CompilerComponent = /** @class */ (function () {
             template: __webpack_require__("../../../../../src/app/components/compiler/compiler.component.html"),
             styles: [__webpack_require__("../../../../../src/app/components/compiler/compiler.component.css")],
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__compiler_service__["a" /* CompilerService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__compiler_service__["a" /* CompilerService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__api_permlink_service__["a" /* PermlinkService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__api_permlink_service__["a" /* PermlinkService */]) === "function" && _c || Object])
     ], CompilerComponent);
     return CompilerComponent;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=compiler.component.js.map
@@ -1479,14 +1574,18 @@ var CompilerService = /** @class */ (function () {
     CompilerService.prototype.selectedLanguageNext = function (language) {
         this.languageSubject.next(language);
     };
-    CompilerService.prototype.fetchCompilerList$ = function () {
-        return this.listApi.fetch$();
-    };
+    Object.defineProperty(CompilerService.prototype, "fetchCompilerList$", {
+        get: function () {
+            return this.listApi.fetch$();
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(CompilerService.prototype, "loadTemplate$", {
         get: function () {
             var _this = this;
             return this.loadTemplateSubject.asObservable()
-                .flatMap(function (template) { return _this.templateApi.fetch(template); });
+                .flatMap(function (template) { return _this.templateApi.fetch$(template); });
         },
         enumerable: true,
         configurable: true
@@ -1541,7 +1640,8 @@ module.exports = "<div class=\"wandbox-editor\">\n    <ul id=\"wandbox-editor-he
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editor_editor_model__ = __webpack_require__("../../../../../src/app/components/editor/editor.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_local_storage_service__ = __webpack_require__("../../../../../src/app/components/common/local-storage.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__api_permlink_service__ = __webpack_require__("../../../../../src/app/components/api/permlink.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_local_storage_service__ = __webpack_require__("../../../../../src/app/components/common/local-storage.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1556,15 +1656,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var TabComponent = /** @class */ (function () {
-    function TabComponent(storage) {
+    function TabComponent(storage, permlink) {
         var _this = this;
         this.storage = storage;
+        this.permlink = permlink;
         this.changed = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
         this.compileCommand = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
         this.tabCount = 1;
         this.saveContentSubject = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Subject"]();
         this.saveContentSubject.asObservable()
+            .filter(function (_) { return !_this.permlink.requested; })
             .debounceTime(200)
             .subscribe(function (_) {
             _this.storage.setValue('tabs', _this.tabs);
@@ -1716,10 +1819,10 @@ var TabComponent = /** @class */ (function () {
             template: __webpack_require__("../../../../../src/app/components/editor-tab/editor-tab.component.html"),
             styles: [__webpack_require__("../../../../../src/app/components/editor-tab/editor-tab.component.css")]
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__api_permlink_service__["a" /* PermlinkService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__api_permlink_service__["a" /* PermlinkService */]) === "function" && _c || Object])
     ], TabComponent);
     return TabComponent;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=editor-tab.component.js.map
@@ -1778,7 +1881,7 @@ module.exports = "<div class=\"row\">\n    <div class=\"col-md-10\">\n        <e
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__editor_service__ = __webpack_require__("../../../../../src/app/components/editor/editor.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__ = __webpack_require__("../../../../../src/app/components/compiler/compiler.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__ = __webpack_require__("../../../../../src/app/components/common/local-storage.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__api_permlink_service__ = __webpack_require__("../../../../../src/app/components/api/permlink.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_language_mime_util__ = __webpack_require__("../../../../../src/app/components/common/language-mime.util.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1799,12 +1902,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var EditorComponent = /** @class */ (function () {
-    function EditorComponent(service, compiler, storage, route) {
+    function EditorComponent(service, compiler, storage, permlink) {
         var _this = this;
         this.service = service;
         this.compiler = compiler;
         this.storage = storage;
-        this.route = route;
+        this.permlink = permlink;
         this.model = new __WEBPACK_IMPORTED_MODULE_1__editor_model__["a" /* EditorComponentModel */]();
         // Detection changed mime event from compiler changing.
         this.compiler.selectedLanguage$.subscribe(function (language) {
@@ -1820,11 +1923,31 @@ var EditorComponent = /** @class */ (function () {
             _this.model.tabs[0].editorContent = info.code;
             _this.service.changeEditorTabNext(info.code);
         });
+        this.permlink.checkPermlink$.subscribe(function (res) {
+            console.log(res);
+            var parameter = res.parameter, result = res.result;
+            _this.model.tabs = [];
+            var permlinkTab = new __WEBPACK_IMPORTED_MODULE_3__editor_tab_editor_tab_model__["a" /* TabModel */]();
+            permlinkTab.isActive = true;
+            permlinkTab.fileName = '';
+            permlinkTab.editorContent = parameter.code;
+            _this.model.tabs.push(permlinkTab);
+            _this.service.changeEditorTabNext(permlinkTab.editorContent);
+            _this.model.activeTabIndex = 0;
+            if (parameter.codes && parameter.codes.length > 0) {
+                for (var _i = 0, _a = parameter.codes; _i < _a.length; _i++) {
+                    var code = _a[_i];
+                    var tab = new __WEBPACK_IMPORTED_MODULE_3__editor_tab_editor_tab_model__["a" /* TabModel */]();
+                    tab.fileName = code.file;
+                    tab.editorContent = code.code;
+                    _this.model.tabs.push(tab);
+                }
+            }
+        });
     }
     EditorComponent.prototype.ngOnInit = function () {
-        console.log('param', this.route.snapshot.params);
         // Load tab data from local storage.
-        if (this.storage.hasValue('tabs')) {
+        if (!this.permlink.requested && this.storage.hasValue('tabs')) {
             this.model.tabs = this.storage.getValue('tabs');
             this.model.activeTabIndex = this.model.tabs.findIndex(function (v) { return v.isActive; });
         }
@@ -1883,7 +2006,7 @@ var EditorComponent = /** @class */ (function () {
             styles: [__webpack_require__("../../../../../src/app/components/editor/editor.component.css")],
             providers: [__WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]]
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_7__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__angular_router__["a" /* ActivatedRoute */]) === "function" && _e || Object])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__editor_service__["a" /* EditorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__compiler_compiler_service__["a" /* CompilerService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__common_local_storage_service__["a" /* LocalStorageService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_7__api_permlink_service__["a" /* PermlinkService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__api_permlink_service__["a" /* PermlinkService */]) === "function" && _e || Object])
     ], EditorComponent);
     return EditorComponent;
     var _a, _b, _c, _d, _e;
